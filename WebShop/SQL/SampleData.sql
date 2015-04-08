@@ -16,4 +16,11 @@ INSERT INTO Product(Name, [Description], Price, ImageUrl, CategoryId) VALUES
 ('Manly T-Shirt',		'This is a T-Shirt for men!',		200,	'/Content/Images/placeholder.gif',		2),
 ('Not so T-Shirt',		'This is a T-Shirt',				400,	'/Content/Images/placeholder.gif',		2),
 ('Pants',				'Standard pants',					210,	'/Content/Images/placeholder.gif',		2),
-('Nice Pants',			'Nice regular pants',				250,	'/Content/Images/placeholder.gif',		2);
+('Nice Pants',			'Nice regular pants',				250,	'/Content/Images/placeholder.gif',		2),
+('TV',					'Standard TV',						700,	'/Content/Images/placeholder.gif',		3),
+('Computer',			'A generic computer',				900,	'/Content/Images/placeholder.gif',		3),
+('Ipad',				'A decent tablet...',				14000,	'/Content/Images/placeholder.gif',		3),
+('Video',				'Awesome video',					700,	'/Content/Images/placeholder.gif',		3),
+('XBox One',			'A gaming console from Microsoft',	800,	'/Content/Images/placeholder.gif',		3),
+('Playstation 4',		'A gaming console from Sony',		900,	'/Content/Images/placeholder.gif',		3),
+('Nintendo WII-U',		'A gaming console from Nintendo',	400,	'/Content/Images/placeholder.gif',		3);

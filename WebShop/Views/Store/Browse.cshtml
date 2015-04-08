@@ -1,21 +1,24 @@
-﻿@model WebShop.Models.Category
+﻿@using GridMvc.Html
+@model WebShop.Models.Category
  
 @{
-    ViewBag.Title = "Browse Albums";
+    ViewBag.Title = "Browse " + @Model.Name + " Products";
 }
  
-<div class="genre">
-    <h3><em>@Model.Name</em> Products</h3>
+<h3><em>@Model.Name</em> Products</h3>
  
-    <ul id="album-list">
-        @foreach (var product in Model.Products)
-        {
-            <li>
-                <a href="@Url.Action("Details", new { id = product.ProductId })">
-                    <img alt="ImageUrl" src="@product.ImageUrl" />
-                    <span>@product.Name</span>
-                </a>
-            </li>
-        }
-    </ul>
-</div>
+@Html.Grid(Model.Products).Columns(column =>
+{
+    column.Add()
+        .Encoded(false)
+        .Sanitized(false)
+        .RenderValueAs(x => @<img src="@x.ImageUrl" width="100" height="75">)
+        .SetWidth(125);
+
+    column.Add()
+        .Encoded(false)
+        .Sanitized(false)
+        .RenderValueAs(x =>
+            @Html.ActionLink(x.Name, "Details", new { Id = x.ProductId }));
+
+})

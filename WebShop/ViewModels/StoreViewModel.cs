@@ -11,9 +11,12 @@ namespace WebShop.ViewModels
         public List<Product> Products { get; set; }
         public List<Category> Categories { get; set; }
 
-        public List<Product> GetProducts(int categoryId)
+        public List<Product> GetProducts(int categoryId, int takeAmount = 0)
         {
-            return Products.Where(x => x.CategoryId == categoryId).ToList();
+            if (takeAmount <= 0)
+                return Products.Where(x => x.CategoryId == categoryId).ToList();
+
+            return Products.Where(x => x.CategoryId == categoryId).Take(takeAmount).ToList();
         }
     }
 }

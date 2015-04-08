@@ -58,10 +58,6 @@
         <em>Review</em> your cart:
     </h3>
 
-    <button type="button" class="btn btn-default">
-        @Html.ActionLink("Checkout", "AddressAndPayment", "Checkout")
-    </button>
-
     @Html.Grid(Model.CartItems).Columns(columns =>
     {
         columns.Add(cart => cart.Product.Name)
@@ -69,17 +65,20 @@
             .Sanitized(false)
             .Encoded(false)
             .RenderValueAs(o => @Html.ActionLink(o.Product.Name, "Details", "Store", new { id = o.ProductId }, null).ToHtmlString())
-            .SetWidth(200);
+            .SetWidth(400);
         columns.Add(cart => cart.Product.Price)
             .Titled("Price")
-            .SetWidth(25);
+            .SetWidth(200);
         columns.Add(cart => cart.Count)
-            .Titled("Quantity")
-            .SetWidth(25);
+            .Titled("Quantity");
     }).WithPaging(25)
 
     <div class="pull-right">
         Total: @Model.CartTotal
+    </div>
+
+    <div class="pull-left">
+        @Html.ActionLink("Checkout", "AddressAndPayment", "Checkout", null, new { @class = "btn btn-primary"})
     </div>
 
 </div>
