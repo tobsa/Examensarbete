@@ -23,7 +23,7 @@
                 column.Add()
                     .Encoded(false)
                     .Sanitized(false)
-                    .RenderValueAs(x => @<img src="@x.ImageUrl" width="100" height="75">)
+                    .RenderValueAs(x => @<img src="@x.ImageThumbnailUrl" style="width: 150px; height: auto;"/>)
                     .SetWidth(125);
 
                 column.Add()
