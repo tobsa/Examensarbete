@@ -1,0 +1,47 @@
+﻿@using GridMvc.Html
+
+@model WebShop.ViewModels.StoreViewModel
+@{
+    ViewBag.Title = "Store";
+}
+
+<h3>Browse Products</h3>
+
+<p>
+    Select from @Model.Categories.Count categories
+</p>
+
+<ul class="list-group">
+
+    @foreach (var category in Model.Categories)
+    {
+        <li class="list-group-item">
+            @Html.ActionLink(category.Name, "Browse", new { category = category.Name })
+
+            @Html.Grid(Model.GetProducts(category.CategoryId)).Columns(column =>
+            {
+            })
+
+
+            @*<table class="table">
+                <tr>
+                    @foreach (var product in Model.GetProducts(category.CategoryId))
+                    {
+                        <td>
+                            @product.Name
+                        </td>
+                    }
+                </tr>
+            </table>*@
+
+            @*<div class="row">
+                    <div class="col-xs-6 col-md-3">
+                        <a href="#" class="thumbnail">
+                            <img src="..." alt="...">
+                        </a>
+                    </div>
+                </div>*@
+        </li>
+
+    }
+</ul>

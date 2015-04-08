@@ -1,0 +1,18 @@
+﻿@model IEnumerable<WebShop.Models.Category>
+
+
+<div class="panel panel-default">
+
+    <h4>Categories</h4>
+    <ul class="list-group">
+
+        @foreach (var category in Model)
+        {
+            <li class="list-group-item">
+                @Html.ActionLink(category.Name, "Browse", "Store", new { Category = category.Name }, null)
+            </li>
+        }
+
+    </ul>
+
+</div>
