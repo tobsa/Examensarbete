@@ -1,0 +1,15 @@
+﻿
+ul#album-list
+{
+	list-style: none;
+	margin-left: 0px;
+}
+
+ul#album-list li
+{
+	height: 130px;
+	width: 100px;
+	float: left;
+	margin: 10px;
+	text-align: center;
+}

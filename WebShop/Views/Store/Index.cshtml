@@ -5,34 +5,41 @@
     ViewBag.Title = "Store";
 }
 
-<h3>Browse Products</h3>
+<h3>Bläddra bland produkter</h3>
 
-<p> Select from @Model.Categories.Count categories </p>
+<p> Välj bland @Model.Categories.Count kategorier </p>
 
 <ul class="list-group">
 
     @foreach (var category in Model.Categories)
     {
-        <li class="list-group-item">
-            <h4>
-                @Html.ActionLink(category.Name, "Browse", new { category = category.Name }, new { })
-            </h4>
-             
-            @Html.Grid(Model.GetProducts(category.CategoryId)).Columns(column =>
-            {
-                column.Add()
-                    .Encoded(false)
-                    .Sanitized(false)
-                    .RenderValueAs(x => @<img src="@x.ImageThumbnailUrl" style="width: 150px; height: auto;"/>)
-                    .SetWidth(125);
+        <li class="list-group-item" style="margin-bottom: 50px;">
+            <h3 style="text-align: center">
+                @Html.ActionLink(category.Name, "Browse", new { category = category.Name }, new { @style="font-size: 28px;" })
+            </h3>
 
-                column.Add()
-                    .Encoded(false)
-                    .Sanitized(false)
-                    .RenderValueAs(x =>
-                        @Html.ActionLink(x.Name, "Details", new { Id = x.ProductId }));
+            <hr />
 
-            })
+            <ul style="list-style-type: none; margin-left: 0px;">
+                @foreach (var product in Model.GetProducts(category.CategoryId))
+                {
+                    <li style="display: inline-block; width: 200px; height: 300px; text-align: center;">
+                        @Html.ActionLink(product.Name, "Details", new { Id = product.ProductId })
+                        <div>
+                            <a href="@Url.Action("Details", new { id = product.ProductId })">
+                                <img src="@product.ImageThumbnailUrl" style="width: 150px; height: 200px;" />
+                            </a>
+                        </div>
+
+                        <div class="pull-left" style="color: palevioletred; padding-left: 20px; padding-top: 5px; font-weight: bold;">
+                            @product.Price kr
+                        </div>
+                        <div class="pull-right" style="padding-right: 25px; padding-top: 5px;">
+                            @Html.ActionLink("Köp", "AddToCart", "ShoppingCart", new { id = product.ProductId }, new { @class = "btn btn-sm btn-default", @style="width: 60px;" })
+                        </div>
+                    </li>
+                }
+            </ul>
         </li>
     }
 </ul>

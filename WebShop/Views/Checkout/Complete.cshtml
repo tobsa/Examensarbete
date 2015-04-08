@@ -1,13 +1,41 @@
-﻿@model int
+﻿@model WebShop.ViewModels.CheckoutCompleteViewModel 
 
 @{
     ViewBag.Title = "Checkout Complete";
 }
 
-<h2>Checkout Complete</h2>
+<h2>Köpet är avslutat</h2>
 
-<p>Thanks for your order! Your order number is: @Model</p>
+<p>Tack för din order! Ditt ordernummer är: @Model.OrderId </p>
 
-<p>How about shopping for some more music in our 
-    @Html.ActionLink("store", "Index", "Home")
+<p>Varför inte handla någonting mer? Gå tillbaka till butiken: 
+    @Html.ActionLink("butik", "Index", "Home")
 </p>
+
+<hr />
+
+<h4> Rekommenderad produkt: </h4>
+
+<ul style="list-style-type: none">
+
+    <li style="display: inline-block; width: 500px; padding: 25px;">
+        <img alt="ImageUrl" src="@Model.RecommendedProduct.ImageUrl" style="width: 300px; height: auto;" />
+    </li>
+    <li style="display: inline-block">
+        <h2>@Model.RecommendedProduct.Name</h2>
+        <hr />
+
+        <p>@Model.RecommendedProduct.Description</p>
+        <p style="font-size: 24px; color: palevioletred; ">
+            @String.Format("{0:F}", Model.RecommendedProduct.Price)
+            <em>kr</em>
+        </p>
+        <p>
+            Leveranstid 2-5 arbetsdagar
+        </p>
+        <p>
+            @Html.ActionLink("Lägg i varukorg", "AddToCart", "ShoppingCart", new { id = Model.RecommendedProduct.ProductId }, new { @class = "btn btn-primary" })
+        </p>
+    </li>
+
+</ul>

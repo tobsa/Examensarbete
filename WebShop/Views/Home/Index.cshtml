@@ -1,51 +1,54 @@
 ﻿@using GridMvc.Html
-@model List<WebShop.Models.Product>
+@model WebShop.ViewModels.StoreViewModel
 
 @{
-    ViewBag.Title = "ASP.NET MVC Music Store";
+    ViewBag.Title = "WebShop";
 }
 
-<div class="jumbotron">
-    <div class="page-header">
-        <h1>
-            WebShop
-        </h1>
+<div class="jumbotron panel panel-default" style="background-color: ghostwhite;">
+    <h1>Fizzly Doodly Store (or an other snazzy title here...)</h1>
+
+    <div class="">
+        <small>Ett examensarbete utfört av Kristoffer Johansson och Tobias Savinainen i samarbete med:</small>
     </div>
-
-    @*@foreach (var product in Model)
-    {
-        <p>
-            <a href="@Url.Action("Details", "Store", new { id = product.ProductId })">
-
-                <img alt="ImageUrl" src="@product.ImageUrl" />
-                <span>@product.Name</span>
-            </a>
-        </p>
-    }*@
+    <div class="">
+        <img src="~/Content/Images/logo_hb.png" style="width: auto; height: 60px;" />
+        <img src="~/Content/Images/logo_siir.png" style="width: auto; height: 60px; padding-left: 25px;" />
+    </div>
 </div>
     
 
-@Html.Grid(Model).Columns(columns =>
+<ul class="list-group">
+
+    @foreach (var category in Model.Categories)
     {
-        columns.Add(product => product.Name)
-            .Titled("Products")
-            .SetWidth(100);
-        columns.Add(product => product.Description)
-            .Titled("Description")
-            .SetWidth(400);
-    }).WithPaging(5)
+        <li class="list-group-item" style="margin-bottom: 25px;">
+            <h3 style="text-align: center">
+                @Html.ActionLink(category.Name, "Browse", "Store", new { category = category.Name }, new { @style = "font-size: 28px;" })
+            </h3>
 
+            <hr />
 
-@*<h3><em>Fresh</em> off the grill</h3>
+            <ul style="list-style-type: none; margin-left: 0px;">
+                @foreach (var product in Model.GetProducts(category.CategoryId).Take(5))
+                {
+                    <li style="display: inline-block; width: 200px; height: 300px; text-align: center;">
+                        @Html.ActionLink(product.Name, "Details", "Store", new { Id = product.ProductId })
+                        <div>
+                            <a href="@Url.Action("Details", "Store", new { id = product.ProductId })">
+                                <img src="@product.ImageThumbnailUrl" style="width: 150px; height: 200px;" />
+                            </a>
+                        </div>
 
-<ul id="album-list">
-    @foreach (var album in Model)
-    {
-        <li><a href="@Url.Action("Details", "Store",
-                new { id = album.ProductId })">
-
-            <img alt="@album.Name" src="@album.ImageUrl" />
-            <span>@album.Name</span> </a>
+                        <div class="pull-left" style="color: palevioletred; padding-left: 20px; padding-top: 5px; font-weight: bold;">
+                            @product.Price kr
+                        </div>
+                        <div class="pull-right" style="padding-right: 25px; padding-top: 5px;">
+                            @Html.ActionLink("Köp", "AddToCart", "ShoppingCart", new { id = product.ProductId }, new { @class = "btn btn-sm btn-default", @style = "width: 60px;" })
+                        </div>
+                    </li>
+                }
+            </ul>
         </li>
     }
-</ul>*@
+</ul>

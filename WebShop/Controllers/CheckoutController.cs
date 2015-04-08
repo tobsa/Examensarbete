@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using WebShop.Models;
+using WebShop.ViewModels;
 
 namespace WebShop.Controllers
 {
@@ -37,28 +38,18 @@ namespace WebShop.Controllers
 
                 cart.CreateOrder(order);
 
-                return RedirectToAction("Complete", new { id = order.OrderId });
+                var random = new Random();
+                var products = db.Products.ToList();
+                var model = new CheckoutCompleteViewModel();
+                model.OrderId = order.OrderId;
+                model.RecommendedProduct = products[random.Next(products.Count)];
+
+                return View("Complete", model);
             }
             catch
             {
                 //Invalid - redisplay with errors
                 return View(order);
-            }
-        }
-
-        // GET: /Checkout/Complete
-        public ActionResult Complete(int id)
-        {
-            // Validate customer owns this order
-            bool isValid = db.Orders.Any(o => o.OrderId == id);
-
-            if (isValid)
-            {
-                return View(id);
-            }
-            else
-            {
-                return View("Error");
             }
         }
     }

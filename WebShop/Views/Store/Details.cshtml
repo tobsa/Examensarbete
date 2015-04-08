@@ -4,24 +4,31 @@
     ViewBag.Title = Model.Name;
 }
 
+<h2>@Model.Name</h2>
+
 <div class="panel panel-default" style="padding-left: 50px;">
 
-    <h2>@Model.Name</h2>
+    <ul style="list-style-type: none">
 
-    <p>
-        <img alt="ImageUrl" src="@Model.ImageUrl" style="width: 400px; height: auto;" />
-    </p>
+        <li style="display: inline-block; width: 600px; padding: 25px;">
+            <img alt="ImageUrl" src="@Model.ImageUrl" style="width: 400px; height: auto;" />
+        </li>
+        <li style="display: inline-block">
+            <h2>@Model.Name</h2>
+            <hr />
 
-    <p>
-        @Model.Description
-    </p>
-    <p>
-        <em>Price:</em>
-        @String.Format("{0:F}", Model.Price)
-        <em>kr</em>
-    </p>
-    <p>
-        @Html.ActionLink("Add to cart", "AddToCart", "ShoppingCart", new { id = Model.ProductId }, new { @class="btn btn-primary"})
-    </p>
+            <p>@Model.Description</p>
+            <p style="font-size: 24px; color: palevioletred; ">
+                @String.Format("{0:F}", Model.Price)
+                <em>kr</em>
+            </p>
+            <p>
+                Leveranstid 2-5 arbetsdagar
+            </p>
+            <p>
+                @Html.ActionLink("Lägg i varukorg", "AddToCart", "ShoppingCart", new { id = Model.ProductId }, new { @class = "btn btn-primary" })
+            </p>
+        </li>
 
+    </ul>
 </div>

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using WebShop.Models;
+using WebShop.ViewModels;
 
 namespace WebShop.Controllers
 {
@@ -11,8 +12,11 @@ namespace WebShop.Controllers
 
         public ActionResult Index()
         {
-            var products = db.Products.ToList();            
-            return View(products);
+            var model = new StoreViewModel();
+            model.Categories = db.Categorys.ToList();
+            model.Products = db.Products.ToList();
+
+            return View(model);
         }
     }
 }

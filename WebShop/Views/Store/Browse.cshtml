@@ -5,20 +5,27 @@
     ViewBag.Title = "Browse " + @Model.Name + " Products";
 }
  
-<h3><em>@Model.Name</em> Products</h3>
+<h2>@Model.Name</h2>
+<hr />
  
-@Html.Grid(Model.Products).Columns(column =>
-{
-    column.Add()
-        .Encoded(false)
-        .Sanitized(false)
-        .RenderValueAs(x => @<img src="@x.ImageUrl" width="100" height="75">)
-        .SetWidth(125);
+<ul style="list-style-type: none;">
 
-    column.Add()
-        .Encoded(false)
-        .Sanitized(false)
-        .RenderValueAs(x =>
-            @Html.ActionLink(x.Name, "Details", new { Id = x.ProductId }));
+    @foreach (var product in Model.Products)
+    {
+        <li style="display: inline-block; width: 200px; height: 300px; text-align: center;">
+            @Html.ActionLink(product.Name, "Details", new { Id = product.ProductId })
+            <div>
+                <a href="@Url.Action("Details", new { id = product.ProductId })">
+                    <img src="@product.ImageThumbnailUrl" style="width: 150px; height: 200px;" />
+                </a>
+            </div>
 
-})
+            <div class="pull-left" style="color: red; padding-left: 20px; padding-top: 5px; font-weight: bold;">
+                @product.Price kr
+            </div>
+            <div class="pull-right" style="padding-right: 25px; padding-top: 5px;">
+                @Html.ActionLink("Köp", "AddToCart", "ShoppingCart", new { id = product.ProductId }, new { @class = "btn btn-sm btn-default", @style = "width: 60px;" })
+            </div>
+        </li>
+    }
+</ul>
