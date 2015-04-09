@@ -7,7 +7,23 @@
 
 <h3>Bläddra bland produkter</h3>
 
-<p> Välj bland @Model.Categories.Count kategorier </p>
+<div>
+    Välj bland @Model.Categories.Count kategorier
+
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+            Kategorier
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+            @foreach (var category in Model.Categories)
+            {
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("Browse", "Store", new { category = category.Name})">@category.Name</a></li>
+            }
+        </ul>
+    </div>
+</div>
+<br />
 
 <ul class="list-group">
 
@@ -15,7 +31,7 @@
     {
         <li class="list-group-item" style="margin-bottom: 50px;">
             <h3 style="text-align: center">
-                @Html.ActionLink(category.Name, "Browse", new { category = category.Name }, new { @style="font-size: 28px;" })
+                @Html.ActionLink(category.Name, "Browse", new { category = category.Name }, new { @style = "font-size: 28px;" })
             </h3>
 
             <hr />
@@ -35,7 +51,7 @@
                             @product.Price kr
                         </div>
                         <div class="pull-right" style="padding-right: 25px; padding-top: 5px;">
-                            @Html.ActionLink("Köp", "AddToCart", "ShoppingCart", new { id = product.ProductId }, new { @class = "btn btn-sm btn-default", @style="width: 60px;" })
+                            @Html.ActionLink("Köp", "AddToCart", "ShoppingCart", new { id = product.ProductId }, new { @class = "btn btn-sm btn-default", @style = "width: 60px;" })
                         </div>
                     </li>
                 }

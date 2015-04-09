@@ -8,7 +8,9 @@ namespace WebShop.ViewModels
 {
     public class CheckoutCompleteViewModel
     {
-        public int OrderId { get; set; }
+        public Order Order { get; set; }
         public Product RecommendedProduct { get; set; }
+        public List<Product> Products { get; set; }
+        public bool IsWebOrder { get; set; }
     }
 }

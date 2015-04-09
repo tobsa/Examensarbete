@@ -30,7 +30,6 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="@Url.Content("~/Store/")">Produkter</a></li>
                     <li>@{Html.RenderAction("CartSummary", "ShoppingCart");}</li>
                     <li><a href="@Url.Content("~/StoreManager/")">Administratör</a></li>
                 </ul>
@@ -38,16 +37,8 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-2" style="padding-left: 50px">
-            @{ Html.RenderAction("GenreMenu", "Store"); }
-        </div>
-        <div>
-            <div class="container body-content">
-                @RenderBody()
-            </div>
-        </div>
-
+    <div class="container body-content">
+        @RenderBody()
     </div>
 
     @Scripts.Render("~/bundles/jquery")

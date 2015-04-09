@@ -1,5 +1,5 @@
-﻿@using GridMvc.Html
-@model WebShop.ViewModels.StoreViewModel
+﻿@model bool
+@using GridMvc.Html
 
 @{
     ViewBag.Title = "WebShop";
@@ -8,47 +8,21 @@
 <div class="jumbotron panel panel-default" style="background-color: ghostwhite;">
     <h1>Fizzly Doodly Store (or an other snazzy title here...)</h1>
 
-    <div class="">
+    <div class="text-center">
         <small>Ett examensarbete utfört av Kristoffer Johansson och Tobias Savinainen i samarbete med:</small>
     </div>
-    <div class="">
+    <div class="text-center">
         <img src="~/Content/Images/logo_hb.png" style="width: auto; height: 60px;" />
         <img src="~/Content/Images/logo_siir.png" style="width: auto; height: 60px; padding-left: 25px;" />
     </div>
+
+    <br />
+    <div class="text-center">
+        <h3>Var vänlig välj:</h3>
+    </div>
+    <div class="text-center">
+        @Html.ActionLink("Webbutik", "StoreType", new { type = true }, new { @class = "btn btn-lg btn-" + (@Model ? "success" : "primary"), @style = "width: 15%;" })
+        @Html.ActionLink("Fysisk butik", "StoreType", new { type = false }, new { @class = "btn btn-lg btn-" + (@Model ? "primary" : "success"), @style = "width: 15%;" })
+    </div>
 </div>
     
-
-<ul class="list-group">
-
-    @foreach (var category in Model.Categories)
-    {
-        <li class="list-group-item" style="margin-bottom: 25px;">
-            <h3 style="text-align: center">
-                @Html.ActionLink(category.Name, "Browse", "Store", new { category = category.Name }, new { @style = "font-size: 28px;" })
-            </h3>
-
-            <hr />
-
-            <ul style="list-style-type: none; margin-left: 0px;">
-                @foreach (var product in Model.GetProducts(category.CategoryId).Take(5))
-                {
-                    <li style="display: inline-block; width: 200px; height: 300px; text-align: center;">
-                        @Html.ActionLink(product.Name, "Details", "Store", new { Id = product.ProductId })
-                        <div>
-                            <a href="@Url.Action("Details", "Store", new { id = product.ProductId })">
-                                <img src="@product.ImageThumbnailUrl" style="width: 150px; height: 200px;" />
-                            </a>
-                        </div>
-
-                        <div class="pull-left" style="color: palevioletred; padding-left: 20px; padding-top: 5px; font-weight: bold;">
-                            @product.Price kr
-                        </div>
-                        <div class="pull-right" style="padding-right: 25px; padding-top: 5px;">
-                            @Html.ActionLink("Köp", "AddToCart", "ShoppingCart", new { id = product.ProductId }, new { @class = "btn btn-sm btn-default", @style = "width: 60px;" })
-                        </div>
-                    </li>
-                }
-            </ul>
-        </li>
-    }
-</ul>

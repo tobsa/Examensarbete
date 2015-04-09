@@ -32,7 +32,9 @@ namespace WebShop.Controllers
                 order.Username = username;
                 order.OrderDate = DateTime.Now;
                 order.Total = cart.GetTotal();
-
+                order.IpAddress = Request.UserHostAddress;
+                order.IsWebOrder = Session["StoreType"] == null || (bool)Session["StoreType"]; 
+                
                 db.Orders.Add(order);
                 db.SaveChanges();
 
@@ -41,8 +43,10 @@ namespace WebShop.Controllers
                 var random = new Random();
                 var products = db.Products.ToList();
                 var model = new CheckoutCompleteViewModel();
-                model.OrderId = order.OrderId;
+                model.Order = order;
                 model.RecommendedProduct = products[random.Next(products.Count)];
+                model.Products = products.Take(4).ToList();
+                model.IsWebOrder = order.IsWebOrder;
 
                 return View("Complete", model);
             }

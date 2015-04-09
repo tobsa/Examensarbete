@@ -22,5 +22,11 @@ namespace WebShop.Models
 
         [ScaffoldColumn(false)]
         public List<OrderDetail> OrderDetails { get; set; }
+
+        [ScaffoldColumn(false)]
+        public bool IsWebOrder { get; set; }
+
+        [ScaffoldColumn(false)]
+        public string IpAddress { get; set; }
     }
 }

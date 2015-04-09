@@ -6,7 +6,7 @@
 
 <h2>Köpet är avslutat</h2>
 
-<p>Tack för din order! Ditt ordernummer är: @Model.OrderId </p>
+<p>Tack för din order! Ditt ordernummer är: @Model.Order.OrderId </p>
 
 <p>Varför inte handla någonting mer? Gå tillbaka till butiken: 
     @Html.ActionLink("butik", "Index", "Home")
@@ -19,10 +19,14 @@
 <ul style="list-style-type: none">
 
     <li style="display: inline-block; width: 500px; padding: 25px;">
-        <img alt="ImageUrl" src="@Model.RecommendedProduct.ImageUrl" style="width: 300px; height: auto;" />
+        <a href="@Url.Action("Details", "Store", new { Id = Model.RecommendedProduct.ProductId})">
+            <img alt="ImageUrl" src="@Model.RecommendedProduct.ImageUrl" style="width: 300px; height: auto;" />
+        </a>
     </li>
     <li style="display: inline-block">
-        <h2>@Model.RecommendedProduct.Name</h2>
+        <h2>
+            @Html.ActionLink(Model.RecommendedProduct.Name, "Details", "Store", new { Id = Model.RecommendedProduct.ProductId }, null)
+        </h2>
         <hr />
 
         <p>@Model.RecommendedProduct.Description</p>
@@ -37,5 +41,26 @@
             @Html.ActionLink("Lägg i varukorg", "AddToCart", "ShoppingCart", new { id = Model.RecommendedProduct.ProductId }, new { @class = "btn btn-primary" })
         </p>
     </li>
-
 </ul>
+
+@if (Model.IsWebOrder)
+{
+    <hr />
+    <h4>Andra produkter du kanske gillar: </h4>
+    
+    <ul style="list-style-type: none">
+        @foreach (var product in Model.Products)
+        {
+            <li style="display: inline-block; width: 250px; padding: 25px;">
+                <div class="text-center">
+                    @Html.ActionLink(product.Name, "Details", "Store", new { Id = product.ProductId }, null)
+                </div>
+
+                <a href="@Url.Action("Details", "Store", new { Id = product.ProductId})">
+                    <img alt="ImageUrl" src="@product.ImageThumbnailUrl" style="width: 200px; height: 300px;" />
+                </a>
+            </li>
+        }
+    </ul>
+}
+

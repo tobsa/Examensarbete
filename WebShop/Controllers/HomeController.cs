@@ -8,15 +8,17 @@ namespace WebShop.Controllers
 {
     public class HomeController : Controller
     {
-        ProductContext db = new ProductContext();
-
         public ActionResult Index()
         {
-            var model = new StoreViewModel();
-            model.Categories = db.Categorys.ToList();
-            model.Products = db.Products.ToList();
+            bool isWebStore = Session["StoreType"] == null || (bool)Session["StoreType"] == true;
 
-            return View(model);
+            return View(isWebStore);
+        }
+
+        public ActionResult StoreType(bool type)
+        {
+            Session["StoreType"] = type;
+            return RedirectToAction("Index", "Store", null);
         }
     }
 }
