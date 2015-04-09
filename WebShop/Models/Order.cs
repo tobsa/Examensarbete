@@ -12,6 +12,8 @@ namespace WebShop.Models
         public int OrderId { get; set; }
 
         [ScaffoldColumn(true)]
+        [Required(ErrorMessage = "Du måste ange ett giltigt användarnamn")]
+        [DisplayName("Användarnamn")]
         public string Username { get; set; }
 
         [ScaffoldColumn(false)]

@@ -38,7 +38,9 @@
             Leveranstid 2-5 arbetsdagar
         </p>
         <p>
-            @Html.ActionLink("Lägg i varukorg", "AddToCart", "ShoppingCart", new { id = Model.RecommendedProduct.ProductId }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Välj produkt", "ChooseProduct", "Checkout", new { recommendedProductId = Model.RecommendedProduct.ProductId, 
+                                                                                    orderId = Model.Order.OrderId,
+                                                                                    selectedProductId = Model.RecommendedProduct.ProductId}, new { @class = "btn btn-primary" })
         </p>
     </li>
 </ul>

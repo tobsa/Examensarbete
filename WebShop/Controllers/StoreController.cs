@@ -17,7 +17,7 @@ namespace WebShop.Controllers
         {
             var model = new StoreViewModel();
             model.Products = db.Products.ToList();
-            model.Categories = db.Categorys.ToList();
+            model.Categories = db.Categories.ToList();
 
             return View(model);
         }
@@ -25,7 +25,7 @@ namespace WebShop.Controllers
         // GET: /Store/Browse?category=Fabrics
         public ActionResult Browse(string category)
         {
-            var categoryModel = db.Categorys.Include("Products").Single(g => g.Name == category);
+            var categoryModel = db.Categories.Include("Products").Single(g => g.Name == category);
             return View(categoryModel);
         }
 
@@ -41,7 +41,7 @@ namespace WebShop.Controllers
         [ChildActionOnly]
         public ActionResult GenreMenu()
         {
-            var genres = db.Categorys.ToList();
+            var genres = db.Categories.ToList();
 
             return PartialView(genres);
         }

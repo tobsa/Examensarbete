@@ -13,7 +13,28 @@ namespace WebShop.Controllers
         // GET: /Checkout/AddressAndPayment
         public ActionResult AddressAndPayment()
         {
+            var cart = ShoppingCart.GetCart(this.HttpContext);
+
+            //if (cart.GetCount() < 5)
+            //    return RedirectToAction("Index", "ShoppingCart");
+
             return View();
+        }
+
+        public ActionResult ChooseProduct(int recommendedProductId, int orderId, int selectedProductId)
+        {
+            var result = new RecommendationResult();
+            result.OrderId = orderId;
+            result.RecommendedProductID = recommendedProductId;
+            result.SelectedProductID = selectedProductId;
+
+            if (!db.RecommendationResults.ToList().Exists(x => x.OrderId == orderId))
+            {
+                db.RecommendationResults.Add(result);
+                db.SaveChanges();
+            }
+
+            return View("CompleteFinished");
         }
 
         // POST: /Checkout/AddressAndPayment
@@ -26,15 +47,22 @@ namespace WebShop.Controllers
             try
             {
                 var username = values["Username"];
-
                 var cart = ShoppingCart.GetCart(this.HttpContext);
                 
                 order.Username = username;
                 order.OrderDate = DateTime.Now;
                 order.Total = cart.GetTotal();
                 order.IpAddress = Request.UserHostAddress;
-                order.IsWebOrder = Session["StoreType"] == null || (bool)Session["StoreType"]; 
-                
+                order.IsWebOrder = Session["StoreType"] == null || (bool)Session["StoreType"];
+
+                //var users = db.Users.ToList();
+                //var orders = db.Orders.ToList();
+
+
+
+                //if (!users.Exists(x => x.Username == username) || orders.Exists(x => x.Username == username))
+                //    return View(order);
+
                 db.Orders.Add(order);
                 db.SaveChanges();
 
@@ -48,7 +76,7 @@ namespace WebShop.Controllers
                 model.Products = products.Take(4).ToList();
                 model.IsWebOrder = order.IsWebOrder;
 
-                return View("Complete", model);
+                return View("Complete", model);          
             }
             catch
             {

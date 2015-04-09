@@ -7,7 +7,7 @@ namespace WebShop.Controllers
 {
     public class ShoppingCartController : Controller
     {
-        ProductContext storeDB = new ProductContext();
+        ProductContext db = new ProductContext();
 
         // GET: /ShoppingCart/
         public ActionResult Index()
@@ -26,25 +26,23 @@ namespace WebShop.Controllers
         // GET: /Store/AddToCart/5
         public ActionResult AddToCart(int id)
         {
-            var addedAlbum = storeDB.Products.Single(product => product.ProductId == id);
+            var addedAlbum = db.Products.Single(product => product.ProductId == id);
 
             var cart = ShoppingCart.GetCart(this.HttpContext);
 
             cart.AddToCart(addedAlbum);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Store");
         }
 
-        //
         // AJAX: /ShoppingCart/RemoveFromCart/5
-
         [HttpPost]
         public ActionResult RemoveFromCart(int id)
         {
             // Remove the item from the cart
             var cart = ShoppingCart.GetCart(this.HttpContext);
 
-            string productName = storeDB.Carts.Single(item => item.RecordId == id).Product.Name;
+            string productName = db.Carts.Single(item => item.RecordId == id).Product.Name;
 
             // Remove from cart
             int itemCount = cart.RemoveFromCart(id);

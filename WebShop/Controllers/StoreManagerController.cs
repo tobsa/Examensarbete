@@ -33,7 +33,7 @@ namespace WebShop.Controllers
         // GET: /StoreManager/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(db.Categorys, "CategoryId", "Name");
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
             return View();
         } 
 
@@ -50,7 +50,7 @@ namespace WebShop.Controllers
                 return RedirectToAction("Index");  
             }
 
-            ViewBag.CategoryId = new SelectList(db.Categorys, "CategoryId", "Name", product.CategoryId);
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", product.CategoryId);
             return View(product);
         }
         
@@ -59,7 +59,7 @@ namespace WebShop.Controllers
         public ActionResult Edit(int id)
         {
             Product product = db.Products.Find(id);
-            ViewBag.CategoryId = new SelectList(db.Categorys, "CategoryId", "Name", product.CategoryId);
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", product.CategoryId);
             return View(product);
         }
 
@@ -74,7 +74,7 @@ namespace WebShop.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryId = new SelectList(db.Categorys, "CategoryId", "Name", product.CategoryId);
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", product.CategoryId);
             return View(product);
         }
 
