@@ -57,3 +57,32 @@ INSERT INTO Product(Name, [Description], Price, ImageUrl, ImageThumbnailUrl, Cat
 ('Orange skjorta - Carnaby Satin ',				'Vår Green Ribbon-kollektion förser dig med mångsidiga och stilfulla skjortor för varje tillfälle. Denna orange skjortan är tillverkad av ett exklusivt satängtyg med unik textur och detaljer som vår mjuka extreme cut away-krage. Tyget är tvättat för att skapa ett avslappnat och ledigt uttryck.', 500,	'/Content/Images/Shirts/Eton - Skjorta 22.png', '/Content/Images/Shirts/Eton - Skjorta 22 thumb.png',	2),
 ('Svart button-down skjorta - Hoxton Linen',	'En mångsidig och slitstart skjorta tillverkad av linne som passar perfekt till alla tillfällen. Bär skjortan till ett par lediga bomullsbyxor och en finstickad kofta för en modern och elegant look. Bland detaljerna syns vår button down-krage samt enkelknäppta manschetter.',						500,	'/Content/Images/Shirts/Eton - Skjorta 23.png', '/Content/Images/Shirts/Eton - Skjorta 23 thumb.png',	2),
 ('Mikromönstrad skjorta - Brighton Poplin',		'Denna eleganta skjortan är tryckt med ett innovativt mikromönster. Bär den till en klassisk marinblå kostym eller en grå kostym för att göra ett stilsäkert intryck på jobbet. Bland detaljerna syns vår cut away-krage samt enkelknäppta manschetter.',									500,	'/Content/Images/Shirts/Eton - Skjorta 24.png', '/Content/Images/Shirts/Eton - Skjorta 24 thumb.png',	2);
+
+-- Users
+DELETE FROM [User];
+INSERT INTO [User] VALUES
+('wae1q'),('fvujl'),('1x62b'),('vrhl0'),
+('swoo9'),('810lw'),('z0897'),('47zak'),
+('1ka59'),('ud07y'),('2cll0'),('9k1x9'),
+('yq87i'),('8c4ym'),('hkn9a'),('pbav1'),
+('8lhru'),('ta2g3'),('x4l9x'),('gdv37'),
+('t401b'),('oagkt'),('b08ba'),('4xpa9'),
+('r8lz7'),('0d998'),('v8sao'),('ji8ci'),
+('m391m'),('jj242'),('rbekj'),('3ybel'),
+('dswuc'),('mfwx6'),('503ym'),('277j7'),
+('t0oac'),('kwuni'),('oub5u'),('ytvto'),
+('l4va6'),('z2pmo'),('m86uy'),('fvcsx'),
+('idusq'),('vduny'),('vycgm'),('kwqyj'),
+('x74zx'),('j8vju'),('h8ryi'),('fuq96'),
+('cdxhu'),('g40vh'),('vaeyg'),('36ds8'),
+('71rnd'),('6ij2g'),('p2uhf'),('z53n8'),
+('aatdk'),('hvv9z'),('0gi90'),('ek9va'),
+('dw0gl'),('me4f1'),('ehxlt'),('z429c'),
+('tj9ia'),('diyce'),('e3x1v'),('bs1uo'),
+('g99jv'),('3s1iq'),('1qhtj'),('bajjg'),
+('pjgm9'),('lcyqi'),('0b4f1'),('68eql'),
+('w0uwl'),('4v8w2'),('jfrjd'),('gjjvz'),
+('enbnf'),('rieo7'),('u7x03'),('ocry9'),
+('ck7lt'),('wx5co'),('b2ou0'),('tjj6s'),
+('dqzxi'),('w8a35'),('9ptii'),('c04qk'),
+('dwb3x'),('j4ogv'),('ny4yq'),('xlc0s');
