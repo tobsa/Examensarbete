@@ -8,27 +8,31 @@
 
 <div class="panel panel-default" style="padding-left: 50px;">
 
-    <ul style="list-style-type: none">
+    <div class="container">
+        <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
 
-        <li style="display: inline-block; width: 600px; padding: 25px;">
-            <img alt="ImageUrl" src="@Model.ImageUrl" style="width: 400px; height: auto;" />
-        </li>
-        <li style="display: inline-block">
-            <h2>@Model.Name</h2>
-            <hr />
+            <div class="col-md-5">
+                <img alt="ImageUrl" src="@Model.ImageUrl" style="width: 300px; height: auto;" />
+            </div>
 
-            <p>@Model.Description</p>
-            <p style="font-size: 24px; color: palevioletred; ">
-                @String.Format("{0:F}", Model.Price)
-                <em>kr</em>
-            </p>
-            <p>
-                Leveranstid 2-5 arbetsdagar
-            </p>
-            <p>
-                @Html.ActionLink("Lägg i varukorg", "AddToCart", "ShoppingCart", new { id = Model.ProductId }, new { @class = "btn btn-primary" })
-            </p>
-        </li>
+            <div class="col-md-7">
+                <h2>@Model.Name</h2>
+                <hr />
 
-    </ul>
+                <p>@Model.Description</p>
+                <p style="font-size: 24px; color: palevioletred; ">
+                    @String.Format("{0:F}", Model.Price)
+                    <em>kr</em>
+                </p>
+                <p>
+                    Leveranstid 2-5 arbetsdagar
+                </p>
+                <p>
+                    @Html.ActionLink("Lägg i varukorg", "AddToCart", "ShoppingCart", new { id = Model.ProductId }, new { @class = "btn btn-primary" })
+                </p>
+            </div>
+
+        </div>
+
+    </div>
 </div>

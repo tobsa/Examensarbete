@@ -35,16 +35,5 @@ namespace WebShop.Controllers
             var product = db.Products.Find(id);
             return View(product);
         }
-
-        //
-        // GET: /Store/GenreMenu
-        [ChildActionOnly]
-        public ActionResult GenreMenu()
-        {
-            var genres = db.Categories.ToList();
-
-            return PartialView(genres);
-        }
-
     }
 }

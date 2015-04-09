@@ -8,15 +8,18 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div style="padding-left: 380px; padding-bottom: 10px;">
-        <a href="@Url.Action("Index", "Home")">
-            <img src="~/Content/Images/logo_hb.png" style="width: auto; height: 60px;" />
-        </a>
-        <a href="@Url.Action("Index", "Home")" style="padding-left: 25px;">
-            <img src="~/Content/Images/logo_siir.png" style="width: auto; height: 60px;" />
-        </a>
+    <div class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="@Url.Action("Index", "Home")">
+                    <img src="~/Content/Images/logo_hb.png" style="width: auto; height: 60px;" />
+                </a>
+                <a href="@Url.Action("Index", "Home")" style="padding-left: 25px;">
+                    <img src="~/Content/Images/logo_siir.png" style="width: auto; height: 60px;" />
+                </a>
+            </div>
+        </div>
     </div>
-
     <div class="navbar navbar-inverse navbar-default">
         <div class="container">
             <div class="navbar-header">

@@ -16,15 +16,16 @@
             .Encoded(false)
             .RenderValueAs(o => @Html.ActionLink(o.Product.Name, "Details", "Store", new { id = o.ProductId }, null).ToHtmlString())
             .SetWidth(400);
-        columns.Add(cart => cart.Product.Price)
+        columns.Add()
+            .RenderValueAs(cart => cart.Product.Price + " kr")
             .Titled("Pris (per produkt)")
             .SetWidth(200);
         columns.Add(cart => cart.Count)
             .Titled("Antal");
     }).WithPaging(25)
 
-    <div class="pull-right">
-        Totalt: @Model.CartTotal
+    <div class="pull-right" style="color: palevioletred; font-size: 16px; font-weight: bold;">
+        Totalt: @Model.CartTotal <em>kr</em>
     </div>
 
     <div class="pull-left">

@@ -21,8 +21,18 @@
         <h3>Var vänlig välj:</h3>
     </div>
     <div class="text-center">
-        @Html.ActionLink("Webbutik", "StoreType", new { type = true }, new { @class = "btn btn-lg btn-" + (@Model ? "success" : "primary"), @style = "width: 15%;" })
-        @Html.ActionLink("Fysisk butik", "StoreType", new { type = false }, new { @class = "btn btn-lg btn-" + (@Model ? "primary" : "success"), @style = "width: 15%;" })
+        <div class="row">
+
+            <div class="col-md-6" style="padding-left: 15%; padding-right: 15%;">
+                @Html.ActionLink("Webbutik", "StoreType", new { type = true }, new { @class = "btn btn-lg btn-block btn-" + (@Model ? "success" : "primary") })
+            </div>
+            <div class="col-md-6" style="padding-left: 15%; padding-right: 15%;">
+                @Html.ActionLink("Fysisk butik", "StoreType", new { type = false }, new { @class = "btn btn-lg btn-block btn-" + (@Model ? "primary" : "success") })
+            </div>
+
+        </div>
+
+
     </div>
 </div>
     

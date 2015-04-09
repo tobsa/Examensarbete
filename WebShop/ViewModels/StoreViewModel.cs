@@ -10,7 +10,7 @@ namespace WebShop.ViewModels
     {
         public List<Product> Products { get; set; }
         public List<Category> Categories { get; set; }
-
+                
         public List<Product> GetProducts(int categoryId, int takeAmount = 0)
         {
             if (takeAmount <= 0)

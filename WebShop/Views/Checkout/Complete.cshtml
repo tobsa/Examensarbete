@@ -1,4 +1,4 @@
-﻿@model WebShop.ViewModels.CheckoutCompleteViewModel 
+﻿@model WebShop.ViewModels.CheckoutCompleteViewModel
 
 @{
     ViewBag.Title = "Checkout Complete";
@@ -8,7 +8,8 @@
 
 <p>Tack för din order! Ditt ordernummer är: @Model.Order.OrderId </p>
 
-<p>Varför inte handla någonting mer? Gå tillbaka till butiken: 
+<p>
+    Varför inte handla någonting mer? Gå tillbaka till butiken:
     @Html.ActionLink("butik", "Index", "Home")
 </p>
 
@@ -16,51 +17,72 @@
 
 <h4> Rekommenderad produkt: </h4>
 
-<ul style="list-style-type: none">
+<div class="container">
 
-    <li style="display: inline-block; width: 500px; padding: 25px;">
-        <a href="@Url.Action("Details", "Store", new { Id = Model.RecommendedProduct.ProductId})">
-            <img alt="ImageUrl" src="@Model.RecommendedProduct.ImageUrl" style="width: 300px; height: auto;" />
-        </a>
-    </li>
-    <li style="display: inline-block">
-        <h2>
-            @Html.ActionLink(Model.RecommendedProduct.Name, "Details", "Store", new { Id = Model.RecommendedProduct.ProductId }, null)
-        </h2>
-        <hr />
+    <div class="row">
 
-        <p>@Model.RecommendedProduct.Description</p>
-        <p style="font-size: 24px; color: palevioletred; ">
-            @String.Format("{0:F}", Model.RecommendedProduct.Price)
-            <em>kr</em>
-        </p>
-        <p>
-            Leveranstid 2-5 arbetsdagar
-        </p>
-        <p>
-            @Html.ActionLink("Välj produkt", "ChooseProduct", "Checkout", new { recommendedProductId = Model.RecommendedProduct.ProductId, 
-                                                                                    orderId = Model.Order.OrderId,
-                                                                                    selectedProductId = Model.RecommendedProduct.ProductId}, new { @class = "btn btn-primary" })
-        </p>
-    </li>
-</ul>
+        <div class="col-md-5">
+            <a href="@Url.Action("Details", "Store", new { Id = Model.RecommendedProduct.ProductId})">
+                <img alt="ImageUrl" src="@Model.RecommendedProduct.ImageUrl" style="width: 250px; height: auto;" />
+            </a>
+        </div>
+
+        <div class="col-md-7">
+            <h2> @Html.ActionLink(Model.RecommendedProduct.Name, "Details", "Store", new { Id = Model.RecommendedProduct.ProductId }, null) </h2>
+
+            <hr />
+
+            <p> @Model.RecommendedProduct.Description </p>
+
+            <p style="font-size: 24px; color: palevioletred; ">
+                @String.Format("{0:F}", Model.RecommendedProduct.Price)
+                <em>kr</em>
+            </p>
+
+            <p> Leveranstid 2-5 arbetsdagar </p>
+
+            <p>
+                @Html.ActionLink("Välj produkt", "ChooseProduct", "Checkout", new {
+                    recommendedProductId = Model.RecommendedProduct.ProductId,
+                    orderId = Model.Order.OrderId,
+                    selectedProductId = Model.RecommendedProduct.ProductId
+                }, new { @class = "btn btn-primary" })
+            </p>
+        </div>
+    </div>
+</div>
 
 @if (Model.IsWebOrder)
 {
     <hr />
     <h4>Andra produkter du kanske gillar: </h4>
-    
+
     <ul style="list-style-type: none">
         @foreach (var product in Model.Products)
         {
             <li style="display: inline-block; width: 250px; padding: 25px;">
                 <div class="text-center">
-                    @Html.ActionLink(product.Name, "Details", "Store", new { Id = product.ProductId }, null)
+                    <h4>@product.Name</h4>
                 </div>
 
-                <a href="@Url.Action("Details", "Store", new { Id = product.ProductId})">
-                    <img alt="ImageUrl" src="@product.ImageThumbnailUrl" style="width: 200px; height: 300px;" />
-                </a>
+                <img alt="ImageUrl" src="@product.ImageThumbnailUrl" style="width: 200px; height: 300px;" />
+
+                <div class="text-center">
+
+                    <p> @product.Description </p>
+                    <p style="font-size: 16px; color: palevioletred; ">
+                        @String.Format("{0:F}", product.Price)
+                        <em>kr</em>
+                    </p>
+                    <p>
+                        @Html.ActionLink("Välj produkt", "ChooseProduct", "Checkout", new {
+                               recommendedProductId = Model.RecommendedProduct.ProductId,
+                               orderId = Model.Order.OrderId,
+                               selectedProductId = product.ProductId
+                           }, new { @class = "btn btn-primary" })
+                    </p>
+
+                </div>
             </li>
         }
     </ul>
