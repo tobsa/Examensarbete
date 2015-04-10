@@ -24,7 +24,7 @@
                 @product.Price kr
             </div>
             <div class="pull-right" style="padding-right: 25px; padding-top: 5px;">
-                @Html.ActionLink("Köp", "AddToCart", "ShoppingCart", new { id = product.ProductId }, new { @class = "btn btn-sm btn-default", @style = "width: 60px;" })
+                @Html.ActionLink("Köp", "AddToCartFromIndex", "ShoppingCart", new { id = product.ProductId }, new { @class = "btn btn-sm btn-default", @style = "width: 60px;" })
             </div>
         </li>
     }

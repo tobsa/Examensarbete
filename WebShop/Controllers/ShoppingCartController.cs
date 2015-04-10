@@ -23,8 +23,19 @@ namespace WebShop.Controllers
             return View(viewModel);
         }
 
-        // GET: /Store/AddToCart/5
-        public ActionResult AddToCart(int id)
+        // GET: /Store/AddToCartFromIndex/5
+        public ActionResult AddToCartFromIndex(int id)
+        {
+            return AddToCart(id, "Index", "Store");
+        }
+
+        // GET: /Store/AddToCartFromDetails/5
+        public ActionResult AddToCartFromDetails(int id)
+        {
+            return AddToCart(id, "Index", "ShoppingCart");
+        }
+
+        private ActionResult AddToCart(int id, string actionName, string controllerName)
         {
             var addedAlbum = db.Products.Single(product => product.ProductId == id);
 
@@ -32,7 +43,7 @@ namespace WebShop.Controllers
 
             cart.AddToCart(addedAlbum);
 
-            return RedirectToAction("Index", "Store");
+            return RedirectToAction(actionName, controllerName);
         }
 
 
