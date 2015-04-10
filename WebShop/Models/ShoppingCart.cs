@@ -8,7 +8,7 @@ namespace WebShop.Models
 {
     public class ShoppingCart
     {
-        private ProductContext storeDB = new ProductContext();
+        ProductContext db = new ProductContext();
 
         string ShoppingCartId { get; set; }
 
@@ -29,12 +29,10 @@ namespace WebShop.Models
 
         public void AddToCart(Product product)
         {
-            // Get the matching cart and album instances
-            var cartItem = storeDB.Carts.SingleOrDefault(c => c.CartId == ShoppingCartId && c.ProductId == product.ProductId);
+            var cartItem = db.Carts.SingleOrDefault(c => c.CartId == ShoppingCartId && c.ProductId == product.ProductId);
 
             if (cartItem == null)
             {
-                // Create a new cart item if no cart item exists
                 cartItem = new Cart
                 {
                     ProductId = product.ProductId,
@@ -43,22 +41,19 @@ namespace WebShop.Models
                     DateCreated = DateTime.Now
                 };
 
-                storeDB.Carts.Add(cartItem);
+                db.Carts.Add(cartItem);
             }
             else
             {
-                // If the item does exist in the cart, then add one to the quantity
                 cartItem.Count++;
             }
 
-            // Save changes
-            storeDB.SaveChanges();
+            db.SaveChanges();
         }
 
         public int RemoveFromCart(int id)
         {
-            // Get the cart
-            var cartItem = storeDB.Carts.Single(cart => cart.CartId == ShoppingCartId && cart.RecordId == id);
+            var cartItem = db.Carts.Single(cart => cart.CartId == ShoppingCartId && cart.RecordId == id);
 
             int itemCount = 0;
 
@@ -71,11 +66,10 @@ namespace WebShop.Models
                 }
                 else
                 {
-                    storeDB.Carts.Remove(cartItem);
+                    db.Carts.Remove(cartItem);
                 }
 
-                // Save changes
-                storeDB.SaveChanges();
+                db.SaveChanges();
             }
 
             return itemCount;
@@ -83,39 +77,33 @@ namespace WebShop.Models
 
         public void EmptyCart()
         {
-            var cartItems = storeDB.Carts.Where(cart => cart.CartId == ShoppingCartId);
+            var cartItems = db.Carts.Where(cart => cart.CartId == ShoppingCartId);
 
             foreach (var cartItem in cartItems)
             {
-                storeDB.Carts.Remove(cartItem);
+                db.Carts.Remove(cartItem);
             }
 
-            // Save changes
-            storeDB.SaveChanges();
+            db.SaveChanges();
         }
 
         public List<Cart> GetCartItems()
         {
-            return storeDB.Carts.Where(cart => cart.CartId == ShoppingCartId).ToList();
+            return db.Carts.Where(cart => cart.CartId == ShoppingCartId).ToList();
         }
 
         public int GetCount()
         {
-            // Get the count of each item in the cart and sum them up
-            int? count = (from cartItems in storeDB.Carts
+            int? count = (from cartItems in db.Carts
                           where cartItems.CartId == ShoppingCartId
                           select (int?)cartItems.Count).Sum();
 
-            // Return 0 if all entries are null
             return count ?? 0;
         }
 
         public decimal GetTotal()
         {
-            // Multiply album price by count of that album to get 
-            // the current price for each of those albums in the cart
-            // sum all album price totals to get the cart total
-            decimal? total = (from cartItems in storeDB.Carts
+            decimal? total = (from cartItems in db.Carts
                               where cartItems.CartId == ShoppingCartId
                               select (int?)cartItems.Count * cartItems.Product.Price).Sum();
             return total ?? decimal.Zero;
@@ -127,7 +115,6 @@ namespace WebShop.Models
 
             var cartItems = GetCartItems();
 
-            // Iterate over the items in the cart, adding the order details for each
             foreach (var item in cartItems)
             {
                 var orderDetail = new OrderDetail
@@ -138,23 +125,18 @@ namespace WebShop.Models
                     Quantity = item.Count
                 };
 
-                // Set the order total of the shopping cart
                 orderTotal += (item.Count * item.Product.Price);
 
-                storeDB.OrderDetails.Add(orderDetail);
+                db.OrderDetails.Add(orderDetail);
 
             }
 
-            // Set the order's total to the orderTotal count
             order.Total = orderTotal;
 
-            // Save the order
-            storeDB.SaveChanges();
+            db.SaveChanges();
 
-            // Empty the shopping cart
             EmptyCart();
 
-            // Return the OrderId as the confirmation number
             return order.OrderId;
         }
 
@@ -184,13 +166,13 @@ namespace WebShop.Models
         // be associated with their username
         public void MigrateCart(string userName)
         {
-            var shoppingCart = storeDB.Carts.Where(c => c.CartId == ShoppingCartId);
+            var shoppingCart = db.Carts.Where(c => c.CartId == ShoppingCartId);
 
             foreach (Cart item in shoppingCart)
             {
                 item.CartId = userName;
             }
-            storeDB.SaveChanges();
+            db.SaveChanges();
         }
     }
 }

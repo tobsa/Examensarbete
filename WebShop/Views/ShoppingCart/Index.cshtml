@@ -21,7 +21,12 @@
             .Titled("Pris (per produkt)")
             .SetWidth(200);
         columns.Add(cart => cart.Count)
-            .Titled("Antal");
+            .Titled("Antal")
+            .SetWidth(150);
+        columns.Add()
+            .Sanitized(false)
+            .Encoded(false)
+            .RenderValueAs(x => @Html.ActionLink("Ta bort", "RemoveFromCart", new { id = x.RecordId }, new { @class = "btn btn-sm btn-default" }).ToHtmlString());
     }).WithPaging(25)
 
     <div class="pull-right" style="color: palevioletred; font-size: 16px; font-weight: bold;">

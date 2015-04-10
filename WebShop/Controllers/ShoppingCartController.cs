@@ -35,30 +35,14 @@ namespace WebShop.Controllers
             return RedirectToAction("Index", "Store");
         }
 
-        // AJAX: /ShoppingCart/RemoveFromCart/5
-        [HttpPost]
+
         public ActionResult RemoveFromCart(int id)
         {
-            // Remove the item from the cart
             var cart = ShoppingCart.GetCart(this.HttpContext);
 
-            string productName = db.Carts.Single(item => item.RecordId == id).Product.Name;
+            cart.RemoveFromCart(id);
 
-            // Remove from cart
-            int itemCount = cart.RemoveFromCart(id);
-
-            // Display the confirmation message
-            var results = new ShoppingCartRemoveViewModel
-            {
-                Message = Server.HtmlEncode(productName) +
-                    " has been removed from your shopping cart.",
-                CartTotal = cart.GetTotal(),
-                CartCount = cart.GetCount(),
-                ItemCount = itemCount,
-                DeleteId = id
-            };
-
-            return Json(results);
+            return RedirectToAction("Index");
         }
 
         //
