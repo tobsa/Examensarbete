@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Instructions";
+}
+
+<div class="jumbotron panel panel-default" style="background-color: ghostwhite;">
+    <div class="text-left">
+        <h2>Instruktioner för webbutik</h2>
+    </div>
+    <br />
+    <div class="text-left">
+        <p>1.	Välj fem produkter som du tycker om</p>
+        <p>2.	Gå till varukorgen för att slutföra köpet</p>
+        <p>3.	Fyll i ditt unika användarnamn</p>
+        <p>4.	Välj en av produkterna som visas på skärmen</p>
+        <p>5.	Slut!</p>
+    </div>
+    <div class="text-center">
+        <div class="row">
+            <div class="col-md-6" style="padding-left: 15%; padding-right: 15%;">
+                @Html.ActionLink("Fortsätt", "StoreType", null, new { @class = "btn btn-lg btn-primary"})
+            </div>
+        </div>
+    </div>
+</div>

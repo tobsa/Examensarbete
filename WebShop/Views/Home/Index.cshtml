@@ -6,33 +6,35 @@
 }
 
 <div class="jumbotron panel panel-default" style="background-color: ghostwhite;">
-    <h1>Fizzly Doodly Store (or an other snazzy title here...)</h1>
-
     <div class="text-center">
-        <small>Ett examensarbete utfört av Kristoffer Johansson och Tobias Savinainen i samarbete med:</small>
-    </div>
-    <div class="text-center">
-        <img src="~/Content/Images/logo_hb.png" style="width: auto; height: 60px;" />
-        <img src="~/Content/Images/logo_siir.png" style="width: auto; height: 60px; padding-left: 25px;" />
+        <h2>Automatiska rekommendationer i butik</h2>
     </div>
 
-    <br />
-    <div class="text-center">
-        <h3>Var vänlig välj:</h3>
-    </div>
-    <div class="text-center">
-        <div class="row">
-
-            <div class="col-md-6" style="padding-left: 15%; padding-right: 15%;">
-                @Html.ActionLink("Webbutik", "StoreType", new { type = true }, new { @class = "btn btn-lg btn-block btn-" + (@Model ? "success" : "primary") })
-            </div>
-            <div class="col-md-6" style="padding-left: 15%; padding-right: 15%;">
-                @Html.ActionLink("Fysisk butik", "StoreType", new { type = false }, new { @class = "btn btn-lg btn-block btn-" + (@Model ? "primary" : "success") })
-            </div>
-
+        <div class="text-center">
+            <small>Ett examensarbete utfört av Kristoffer Johansson och Tobias Savinainen i samarbete med:</small>
+        </div>
+        <div class="text-center">
+            <img src="~/Content/Images/logo_hb.png" style="width: auto; height: 60px;" />
+            <img src="~/Content/Images/logo_siir.png" style="width: auto; height: 60px; padding-left: 25px;" />
         </div>
 
+        <br />
+        <div class="text-center">
+            <h3>Var vänlig välj:</h3>
+        </div>
+        <div class="text-center">
+            <div class="row">
 
+                <div class="col-md-6" style="padding-left: 15%; padding-right: 15%;">
+                    @Html.ActionLink("Webbutik", "Instructions", new { type = true }, new { @class = "btn btn-lg btn-block btn-" + (@Model ? "success" : "primary") })
+                </div>
+                <div class="col-md-6" style="padding-left: 15%; padding-right: 15%;">
+                    @Html.ActionLink("Fysisk butik", "Instructions", new { type = false }, new { @class = "btn btn-lg btn-block btn-" + (@Model ? "primary" : "success") })
+                </div>
+
+            </div>
+
+
+        </div>
     </div>
-</div>
     

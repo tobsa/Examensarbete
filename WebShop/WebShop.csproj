@@ -309,6 +309,8 @@
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Checkout\CompleteFinished.cshtml" />
+    <Content Include="Views\Home\WebstoreInstruction.cshtml" />
+    <Content Include="Views\Home\RetailInstruction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

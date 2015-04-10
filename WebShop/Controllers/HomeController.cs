@@ -15,9 +15,15 @@ namespace WebShop.Controllers
             return View(isWebStore);
         }
 
-        public ActionResult StoreType(bool type)
+        public ActionResult Instructions(bool type)
         {
             Session["StoreType"] = type;
+
+            return type ? View("WebstoreInstruction") : View("RetailInstruction");
+        }
+
+        public ActionResult StoreType()
+        {
             return RedirectToAction("Index", "Store", null);
         }
     }
