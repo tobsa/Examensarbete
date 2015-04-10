@@ -71,9 +71,12 @@ namespace WebShop.Controllers
                 var random = new Random();
                 var products = db.Products.ToList();
                 var model = new CheckoutCompleteViewModel();
+
+                var inStoreItems = products.Where(x => x.IsInStore).ToList();
+
                 model.Order = order;
-                model.RecommendedProduct = products[random.Next(products.Count)];
-                model.Products = products.Take(4).ToList();
+                model.RecommendedProduct = inStoreItems[random.Next(inStoreItems.Count)];
+                model.Products = inStoreItems;
                 model.IsWebOrder = order.IsWebOrder;
 
                 return View("Complete", model);          

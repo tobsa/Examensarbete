@@ -45,9 +45,7 @@ namespace WebShop.Controllers
             return RedirectToAction("Index");
         }
 
-        //
         // GET: /ShoppingCart/CartSummary
-
         [ChildActionOnly]
         public ActionResult CartSummary()
         {

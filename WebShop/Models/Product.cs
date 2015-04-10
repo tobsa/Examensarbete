@@ -14,5 +14,6 @@ namespace WebShop.Models
         public string ImageUrl { get; set; }
         public string ImageThumbnailUrl { get; set; }
         public int CategoryId { get; set; }
+        public bool IsInStore { get; set; }
     }
 }

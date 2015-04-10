@@ -16,7 +16,7 @@ namespace WebShop.Controllers
         public ActionResult Index()
         {
             var model = new StoreViewModel();
-            model.Products = db.Products.ToList();
+            model.Products = db.Products.Where(x => !x.IsInStore).ToList();
             model.Categories = db.Categories.ToList();
 
             return View(model);
