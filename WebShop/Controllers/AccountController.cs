@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using System.Web.Security;
-using Mvc3ToolsUpdateWeb_Default.Models;
 using WebShop.Models;
 
-namespace Mvc3ToolsUpdateWeb_Default.Controllers
+namespace WebShop.Controllers
 {
     public class AccountController : Controller
     {
 
-        private void MigrateShoppingCart(string UserName)
+        private void MigrateShoppingCart(string userName)
         {
             // Associate shopping cart items with logged-in user
-            var cart = ShoppingCart.GetCart(this.HttpContext);
+            var cart = ShoppingCart.GetCart(HttpContext);
 
-            cart.MigrateCart(UserName);
-            Session[ShoppingCart.CartSessionKey] = UserName;
+            cart.MigrateCart(userName);
+            Session[ShoppingCart.CartSessionKey] = userName;
         }
 
         //

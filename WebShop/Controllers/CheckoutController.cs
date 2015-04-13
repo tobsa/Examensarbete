@@ -13,7 +13,7 @@ namespace WebShop.Controllers
         // GET: /Checkout/AddressAndPayment
         public ActionResult AddressAndPayment()
         {
-            var cart = ShoppingCart.GetCart(this.HttpContext);
+            var cart = ShoppingCart.GetCart(HttpContext);
 
             //if (cart.GetCount() < 5)
             //    return RedirectToAction("Index", "ShoppingCart");
@@ -47,7 +47,7 @@ namespace WebShop.Controllers
             try
             {
                 var username = values["Username"];
-                var cart = ShoppingCart.GetCart(this.HttpContext);
+                var cart = ShoppingCart.GetCart(HttpContext);
                 
                 order.Username = username;
                 order.OrderDate = DateTime.Now;

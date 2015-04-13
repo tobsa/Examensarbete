@@ -12,7 +12,7 @@ namespace WebShop.Controllers
         // GET: /ShoppingCart/
         public ActionResult Index()
         {
-            var cart = ShoppingCart.GetCart(this.HttpContext);
+            var cart = ShoppingCart.GetCart(HttpContext);
 
             var viewModel = new ShoppingCartViewModel
             {
@@ -39,7 +39,7 @@ namespace WebShop.Controllers
         {
             var addedAlbum = db.Products.Single(product => product.ProductId == id);
 
-            var cart = ShoppingCart.GetCart(this.HttpContext);
+            var cart = ShoppingCart.GetCart(HttpContext);
 
             cart.AddToCart(addedAlbum);
 
@@ -49,7 +49,7 @@ namespace WebShop.Controllers
 
         public ActionResult RemoveFromCart(int id)
         {
-            var cart = ShoppingCart.GetCart(this.HttpContext);
+            var cart = ShoppingCart.GetCart(HttpContext);
 
             cart.RemoveFromCart(id);
 
@@ -60,7 +60,7 @@ namespace WebShop.Controllers
         [ChildActionOnly]
         public ActionResult CartSummary()
         {
-            var cart = ShoppingCart.GetCart(this.HttpContext);
+            var cart = ShoppingCart.GetCart(HttpContext);
 
             ViewData["CartCount"] = cart.GetCount();
 

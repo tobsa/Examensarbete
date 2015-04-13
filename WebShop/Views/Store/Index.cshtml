@@ -1,6 +1,4 @@
-﻿@using GridMvc.Html
-
-@model WebShop.ViewModels.StoreViewModel
+﻿@model WebShop.ViewModels.StoreViewModel
 @{
     ViewBag.Title = "Store";
 }
@@ -36,7 +34,7 @@
 
             <hr />
 
-            <ul style="list-style-type: none; margin-left: 0px;">
+            <ul style="list-style-type: none; margin-left: 0;">
                 @foreach (var product in Model.GetProducts(category.CategoryId))
                 {
                     <li style="display: inline-block; width: 200px; height: 300px; text-align: center;">

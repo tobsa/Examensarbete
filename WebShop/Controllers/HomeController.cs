@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using WebShop.Models;
-using WebShop.ViewModels;
+﻿using System.Web.Mvc;
 
 namespace WebShop.Controllers
 {
@@ -10,7 +6,7 @@ namespace WebShop.Controllers
     {
         public ActionResult Index()
         {
-            bool isWebStore = Session["StoreType"] == null || (bool)Session["StoreType"] == true;
+            bool isWebStore = Session["StoreType"] == null || (bool)Session["StoreType"];
 
             return View(isWebStore);
         }

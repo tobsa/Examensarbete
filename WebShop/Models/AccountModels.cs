@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Web.Mvc;
-using System.Web.Security;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Mvc3ToolsUpdateWeb_Default.Models
+namespace WebShop.Models
 {
 
     public class ChangePasswordModel
@@ -23,7 +18,7 @@ namespace Mvc3ToolsUpdateWeb_Default.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
-        [System.ComponentModel.DataAnnotations.CompareAttribute("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -61,7 +56,7 @@ namespace Mvc3ToolsUpdateWeb_Default.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [System.ComponentModel.DataAnnotations.CompareAttribute("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-
+﻿
 namespace WebShop.Models
 {
     public class SampleData : System.Data.Entity.CreateDatabaseIfNotExists<ProductContext>

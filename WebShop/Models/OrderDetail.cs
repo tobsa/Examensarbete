@@ -1,5 +1,4 @@
-﻿using WebShop.Models;
-
+﻿
 namespace WebShop.Models
 {
     public class OrderDetail
