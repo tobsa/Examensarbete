@@ -14,7 +14,7 @@ namespace WebShop.Controllers
         {
             var model = new StoreViewModel();
             model.Products = db.Products.Where(x => !x.IsInStore).ToList();
-            model.Categories = db.Categories.ToList();
+            model.Categories = db.Categories.ToList();           
 
             return View(model);
         }

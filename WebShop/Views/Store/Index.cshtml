@@ -3,26 +3,6 @@
     ViewBag.Title = "Store";
 }
 
-<h3>Bläddra bland produkter</h3>
-
-<div>
-    Välj bland @Model.Categories.Count kategorier
-
-    <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-            Kategorier
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-            @foreach (var category in Model.Categories)
-            {
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="@Url.Action("Browse", "Store", new { category = category.Name})">@category.Name</a></li>
-            }
-        </ul>
-    </div>
-</div>
-<br />
-
 <ul class="list-group">
 
     @foreach (var category in Model.Categories)
@@ -40,16 +20,16 @@
                     <li style="display: inline-block; width: 200px; height: 300px; text-align: center;">
                         @Html.ActionLink(product.Name, "Details", new { Id = product.ProductId })
                         <div>
-                            <a href="@Url.Action("Details", new { id = product.ProductId })">
+                            @*<a href="@Url.Action("Details", new { id = product.ProductId })">*@
                                 <img src="@product.ImageThumbnailUrl" style="width: 150px; height: 200px;" />
-                            </a>
+                            @*</a>*@
                         </div>
 
                         <div class="pull-left" style="color: palevioletred; padding-left: 20px; padding-top: 5px; font-weight: bold;">
                             @product.Price kr
                         </div>
                         <div class="pull-right" style="padding-right: 25px; padding-top: 5px;">
-                            @Html.ActionLink("Köp", "AddToCartFromIndex", "ShoppingCart", new { id = product.ProductId }, new { @class = "btn btn-sm btn-default", @style = "width: 60px;" })
+                            @Html.ActionLink("Välj", "AddToCartFromIndex", "ShoppingCart", new { id = product.ProductId }, new { @class = "btn btn-sm btn-default", @style = "width: 60px;" })
                         </div>
                     </li>
                 }

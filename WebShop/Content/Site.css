@@ -1,6 +1,11 @@
-﻿body {
+﻿/*body {
     padding-top: 0px;
     padding-bottom: 20px;
+}*/
+
+body { padding-top: 60px; }
+@media screen and (max-width: 768px) {
+    body { padding-top: 0px; }
 }
 
 /* Set padding to keep content from hitting the edges */

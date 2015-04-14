@@ -32,16 +32,21 @@ namespace WebShop.Controllers
         // GET: /Store/AddToCartFromDetails/5
         public ActionResult AddToCartFromDetails(int id)
         {
-            return AddToCart(id, "Index", "ShoppingCart");
+            return AddToCart(id, "Index", "Store");
         }
 
         private ActionResult AddToCart(int id, string actionName, string controllerName)
         {
-            var addedAlbum = db.Products.Single(product => product.ProductId == id);
+            var addedProduct = db.Products.Single(product => product.ProductId == id);
 
             var cart = ShoppingCart.GetCart(HttpContext);
 
-            cart.AddToCart(addedAlbum);
+            bool foundItemInCart = cart.GetCartItems().Exists(x => x.ProductId == id);
+            if (!foundItemInCart)
+                cart.AddToCart(addedProduct);
+
+            if (cart.GetCount() == 5)
+                return RedirectToAction("Index", "ShoppingCart");
 
             return RedirectToAction(actionName, controllerName);
         }

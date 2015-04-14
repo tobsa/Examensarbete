@@ -8,7 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar">
+    @*<div class="navbar">
         <div class="container">
             <div class="navbar-header">
                 <a href="@Url.Action("Index", "Home")">
@@ -19,8 +19,8 @@
                 </a>
             </div>
         </div>
-    </div>
-    <div class="navbar navbar-inverse navbar-default">
+    </div>*@
+    <div class="navbar navbar-inverse navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -29,11 +29,14 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                @Html.ActionLink("Hem", "Index", "Home", null, new { @class = "navbar-brand" })
+                @*@Html.ActionLink("Hem", "Index", "Home", null, new { @class = "navbar-brand" })*@
+                <span class="navbar-brand">@{Html.RenderAction("CartSummary", "ShoppingCart");}</span>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@{Html.RenderAction("CartSummary", "ShoppingCart");}</li>
+                    <li>@Html.ActionLink("Produkter", "Index", "Store")</li>
+                    <li></li>
+
                 </ul>
             </div>
         </div>
