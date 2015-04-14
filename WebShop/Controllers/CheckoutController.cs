@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using WebShop.Models;
+using WebShop.RecommendationSystem;
 using WebShop.ViewModels;
 
 namespace WebShop.Controllers
@@ -58,8 +59,6 @@ namespace WebShop.Controllers
                 //var users = db.Users.ToList();
                 //var orders = db.Orders.ToList();
 
-
-
                 //if (!users.Exists(x => x.Username == username) || orders.Exists(x => x.Username == username))
                 //    return View(order);
 
@@ -74,8 +73,16 @@ namespace WebShop.Controllers
 
                 var inStoreItems = products.Where(x => x.IsInStore).ToList();
 
+                RecommendationCalculator calculator = new RecommendationCalculator();
+                var recommendedProduct = calculator.RecommendProduct(order, new CosineSimilarity());
+
+                // If we can't find a recommended product then choose a random product instead to recommend
+                if (recommendedProduct == null)
+                    model.RecommendedProduct = null; //inStoreItems[random.Next(inStoreItems.Count)];
+                else 
+                    model.RecommendedProduct = recommendedProduct;
+
                 model.Order = order;
-                model.RecommendedProduct = inStoreItems[random.Next(inStoreItems.Count)];
                 model.Products = inStoreItems;
                 model.IsWebOrder = order.IsWebOrder;
 

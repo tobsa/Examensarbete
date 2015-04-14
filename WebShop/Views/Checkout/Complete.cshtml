@@ -17,6 +17,12 @@
 
 <h4> Rekommenderad produkt: </h4>
 
+@if (Model.RecommendedProduct == null)
+{
+   <p>No recommendation available...</p> 
+}
+else
+{
 <div class="container">
 
     <div class="row">
@@ -51,6 +57,7 @@
         </div>
     </div>
 </div>
+}
 
 @if (Model.IsWebOrder)
 {
@@ -76,7 +83,7 @@
                     </p>
                     <p>
                         @Html.ActionLink("Välj produkt", "ChooseProduct", "Checkout", new {
-                               recommendedProductId = Model.RecommendedProduct.ProductId,
+                               recommendedProductId = Model.RecommendedProduct == null ? -1 : Model.RecommendedProduct.ProductId,
                                orderId = Model.Order.OrderId,
                                selectedProductId = product.ProductId
                            }, new { @class = "btn btn-primary" })
