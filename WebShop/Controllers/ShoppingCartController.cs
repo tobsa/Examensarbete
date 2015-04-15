@@ -28,7 +28,13 @@ namespace WebShop.Controllers
         public ActionResult AddToCartFromIndex(int id)
         {
             AddToCart(id, "", "");
-            return Json("Yoyo");
+
+            var cart = ShoppingCart.GetCart(HttpContext);
+
+            if (cart.GetCount() >= 5)
+                return Json("redirect");
+
+            return Json("reload");
         }
 
         // GET: /Store/AddToCartFromDetails/5

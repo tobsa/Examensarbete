@@ -17,8 +17,10 @@ type="text/javascript"></script>
                 })
                 .done(function (data)
                 {
-                    location.reload();
-
+                    if (data === "reload")
+                        location.reload();
+                    if (data === "redirect")
+                        location.href = "/ShoppingCart/Index";
                 });
             }
         });
