@@ -9,19 +9,17 @@
 
 @using (Html.BeginForm()) {
     
-    <h2>Address And Payment</h2>
+    
 
     <fieldset>
-        <legend>Shipping Information</legend>
+        <legend>
+            <h2>Användaruppgifter</h2>
+        </legend>
+
         @Html.EditorForModel()
     </fieldset>
     
     <br />
-    
-    <fieldset>
-        <legend>Payment</legend>
-        <p>No payment information is required at this point</p>
-    </fieldset>
-    
+        
     <input type="submit" value="Avsluta köp" />
 }

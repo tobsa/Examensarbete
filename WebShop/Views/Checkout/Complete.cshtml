@@ -4,18 +4,9 @@
     ViewBag.Title = "Checkout Complete";
 }
 
-<h2>Köpet är avslutat</h2>
+<h2>Var vänlig välj en produkt du gillar</h2>
 
-<p>Tack för din order! Ditt ordernummer är: @Model.Order.OrderId </p>
-
-<p>
-    Varför inte handla någonting mer? Gå tillbaka till butiken:
-    @Html.ActionLink("butik", "Index", "Home")
-</p>
-
-<hr />
-
-<h4> Rekommenderad produkt: </h4>
+@*<h4> Rekommenderad produkt: </h4>
 
 @if (Model.RecommendedProduct == null)
 {
@@ -57,12 +48,11 @@ else
         </div>
     </div>
 </div>
-}
+}*@
 
 @if (Model.IsWebOrder)
 {
     <hr />
-    <h4>Andra produkter du kanske gillar: </h4>
 
     <ul style="list-style-type: none">
         @foreach (var product in Model.Products)

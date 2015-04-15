@@ -23,10 +23,12 @@ namespace WebShop.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
         // GET: /Store/AddToCartFromIndex/5
         public ActionResult AddToCartFromIndex(int id)
         {
-            return AddToCart(id, "Index", "Store");
+            AddToCart(id, "", "");
+            return Json("Yoyo");
         }
 
         // GET: /Store/AddToCartFromDetails/5

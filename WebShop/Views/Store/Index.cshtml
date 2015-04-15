@@ -3,6 +3,28 @@
     ViewBag.Title = "Store";
 }
 
+<script src="/Scripts/jquery-1.10.2.min.js"
+type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".AddProduct").click(function () {
+            var productToAdd = $(this).attr("data-id");
+            if (productToAdd != '') {
+                $.ajax({
+                    type: "POST",
+                    url: "/ShoppingCart/AddToCartFromIndex",
+                    data: { id: productToAdd }
+                })
+                .done(function (data)
+                {
+                    location.reload();
+
+                });
+            }
+        });
+    });
+</script>
+
 <ul class="list-group">
 
     @foreach (var category in Model.Categories)
@@ -21,7 +43,7 @@
                         @Html.ActionLink(product.Name, "Details", new { Id = product.ProductId })
                         <div>
                             @*<a href="@Url.Action("Details", new { id = product.ProductId })">*@
-                                <img src="@product.ImageThumbnailUrl" style="width: 150px; height: 200px;" />
+                            <img src="@product.ImageThumbnailUrl" style="width: 150px; height: 200px;" />
                             @*</a>*@
                         </div>
 
@@ -29,7 +51,15 @@
                             @product.Price kr
                         </div>
                         <div class="pull-right" style="padding-right: 25px; padding-top: 5px;">
-                            @Html.ActionLink("Välj", "AddToCartFromIndex", "ShoppingCart", new { id = product.ProductId }, new { @class = "btn btn-sm btn-default", @style = "width: 60px;" })
+
+                            @*@Ajax.ActionLink("Köp", "AddToCartFromIndex", "ShoppingCart", new { id = product.ProductId }, new AjaxOptions() { HttpMethod = "POST" })*@
+
+
+                            <span class="AddProduct btn btn-sm btn-default" data-id="@product.ProductId" >
+                                Välj
+                            </span>
+
+                            @*@Html.ActionLink("Välj", "AddToCartFromIndex", "ShoppingCart", new { id = product.ProductId }, new { @class = "btn btn-sm btn-default", @style = "width: 60px;"})*@
                         </div>
                     </li>
                 }
@@ -37,3 +67,9 @@
         </li>
     }
 </ul>
+
+<script>
+    document.getElementById("preventEvent").addEventListener("click", function (event) {
+        event.preventDefault()
+    });
+</script>
