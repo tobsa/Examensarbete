@@ -3,7 +3,6 @@ DELETE FROM Category;
 INSERT INTO Category([Description], Name) VALUES
 ('Skjortor i olika utföranden',		'Skjortor');
 
-
 -- Products
 DELETE FROM Product;
 INSERT INTO Product(Name, [Description], Price, ImageUrl, ImageThumbnailUrl, CategoryId, IsInStore) VALUES
@@ -85,3 +84,54 @@ INSERT INTO [User] VALUES
 ('ck7lt'),('wx5co'),('b2ou0'),('tjj6s'),
 ('dqzxi'),('w8a35'),('9ptii'),('c04qk'),
 ('dwb3x'),('j4ogv'),('ny4yq'),('xlc0s');
+
+DELETE FROM [Order];
+INSERT INTO [Order](Username, Total, OrderDate, IsWebOrder, IpAddress) VALUES
+('Tobias1', 2500, '2015-04-10 13:37:00', 1, '193.11.73.8'),
+('Tobias2', 2500, '2015-04-11 13:37:00', 1, '193.11.73.8'),
+('Tobias3', 2500, '2015-04-12 13:37:00', 1, '193.11.73.8'),
+('Tobias4', 2500, '2015-04-13 13:37:00', 1, '193.11.73.8'),
+('Tobias5', 2500, '2015-04-14 13:37:00', 1, '193.11.73.8');
+
+DELETE FROM [OrderDetail];
+INSERT INTO [OrderDetail](OrderId, ProductId, Quantity, UnitPrice) VALUES
+(1, 5, 1, 500),
+(1, 6, 1, 500),
+(1, 7, 1, 500),
+(1, 8, 1, 500),
+(1, 9, 1, 500),
+
+(2, 5, 1, 500),
+(2, 6, 1, 500),
+(2, 7, 1, 500),
+(2, 8, 1, 500),
+(2, 9, 1, 500),
+
+(3, 5, 1, 500),
+(3, 6, 1, 500),
+(3, 7, 1, 500),
+(3, 8, 1, 500),
+(3, 10, 1, 500),
+
+(4, 5, 1, 500),
+(4, 6, 1, 500),
+(4, 7, 1, 500),
+(4, 11, 1, 500),
+(4, 12, 1, 500),
+
+(5, 11, 1, 500),
+(5, 12, 1, 500),
+(5, 13, 1, 500),
+(5, 14, 1, 500),
+(5, 15, 1, 500);
+
+DELETE FROM [RecommendationResult];
+INSERT INTO [RecommendationResult](OrderId, RecommendedProductID, SelectedProductID) VALUES
+(1, -1, 1),
+(2, -1, 2),
+(3, -1, 25),
+(4, -1, 26),
+(5, -1, 27);
+
+DELETE FROM [OrderDetail] WHERE OrderId IN (SELECT OrderId FROM [Order] WHERE Username = 'test');
+DELETE FROM [Order] WHERE Username = 'test';
