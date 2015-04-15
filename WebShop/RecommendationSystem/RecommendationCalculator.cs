@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using WebShop.Models;
 
 namespace WebShop.RecommendationSystem
 {
     public class RecommendationCalculator
     {
+        private const int KNearest = 2;
         private ProductContext db = new ProductContext();
 
         public Product RecommendProduct(Order order, ISimilarityCalculable calculable)
@@ -22,22 +21,49 @@ namespace WebShop.RecommendationSystem
                     data2.Similarity = calculable.CalculateSimilarity(data1.Data, data2.Data);
             }
 
-            var result = FindRecommendationResult(purchaseData);
+            var result = FindRecommendation(purchaseData);
 
-            if (result == null)
+            if (result == -1)
                 return null;
 
-            return db.Products.ToList().SingleOrDefault(x => x.ProductId == result.SelectedProductID);
+            return db.Products.ToList().SingleOrDefault(x => x.ProductId == result);
         }
 
-        protected RecommendationResult FindRecommendationResult(List<PurchaseData> purchaseData)
+        private int FindRecommendation(List<PurchaseData> purchaseData)
         {
-            var bestData = GetDataWithBestSimilarity(purchaseData);
-            
-            var results = db.RecommendationResults.ToList();
-            var foundResult = results.SingleOrDefault(x => x.OrderId == bestData.OrderID);
+            List<PurchaseData> sortedList;
 
-            return foundResult;
+            if (purchaseData.Count >= KNearest)
+            {
+                sortedList = purchaseData.OrderByDescending(purchase => purchase.Similarity).ToList().GetRange(0, KNearest);
+            }
+            else
+            {
+                sortedList = purchaseData.OrderByDescending(purchase => purchase.Similarity).ToList();
+            }
+
+            double similaritySum = sortedList.Sum(purchase => purchase.Similarity);
+
+            foreach (var purchase in sortedList)
+            {
+                purchase.Influence = purchase.Similarity / similaritySum;
+            }
+
+            var products = new Dictionary<int, double>();
+            var tempResult = db.RecommendationResults.ToList();
+
+            foreach (var purchase in sortedList)
+            {
+                foreach (var recommendationResult in tempResult.Where(r => r.OrderId == purchase.OrderID))
+                {
+                    if(products.ContainsKey(recommendationResult.SelectedProductID))
+                        products[recommendationResult.SelectedProductID] += purchase.Influence;
+                    else
+                        products.Add(recommendationResult.SelectedProductID, purchase.Influence);
+                }
+            }
+
+            return products.OrderByDescending(product => product.Value).First().Key;
         }
 
         protected PurchaseData GetDataWithBestSimilarity(List<PurchaseData> purchaseData)
@@ -53,7 +79,7 @@ namespace WebShop.RecommendationSystem
             return bestData;
         }
 
-        protected List<PurchaseData> GetPurchaseData()
+        private List<PurchaseData> GetPurchaseData()
         {
             var products = db.Products.ToList();
             var orders = db.Orders.ToList();
@@ -69,7 +95,7 @@ namespace WebShop.RecommendationSystem
             return purchaseData;
         }
 
-        protected PurchaseData ConvertToPurchaseData(Order order)
+        private PurchaseData ConvertToPurchaseData(Order order)
         {
             var products = db.Products.ToList();
             var orderDetails = db.OrderDetails.ToList();

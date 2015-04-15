@@ -12,5 +12,6 @@ namespace WebShop.RecommendationSystem
         public int OrderID { get; set; }
         public int[] Data { get; set; }
         public double Similarity { get; set; }
+        public double Influence { get; set; }
     }
 }
