@@ -24,12 +24,17 @@ namespace WebShop.Controllers
         }
 
         [HttpPost]
-        // GET: /Store/AddToCartFromIndex/5
         public ActionResult AddToCartFromIndex(int id)
         {
-            AddToCart(id, "", "");
-
             var cart = ShoppingCart.GetCart(HttpContext);
+
+            ar addedProduct = db.Products.Single(product => product.ProductId == id);
+
+            bool foundItemInCart = cart.GetCartItems().Exists(x => x.ProductId == id);
+            if (foundItemInCart)
+                return Json("itemexists");
+
+            cart.AddToCart(addedProduct);
 
             if (cart.GetCount() >= 5)
                 return Json("redirect");
@@ -40,25 +45,15 @@ namespace WebShop.Controllers
         // GET: /Store/AddToCartFromDetails/5
         public ActionResult AddToCartFromDetails(int id)
         {
-            return AddToCart(id, "Index", "Store");
-        }
-
-        private ActionResult AddToCart(int id, string actionName, string controllerName)
-        {
-            var addedProduct = db.Products.Single(product => product.ProductId == id);
-
             var cart = ShoppingCart.GetCart(HttpContext);
 
+            var addedProduct = db.Products.Single(product => product.ProductId == id);
             bool foundItemInCart = cart.GetCartItems().Exists(x => x.ProductId == id);
             if (!foundItemInCart)
                 cart.AddToCart(addedProduct);
 
-            if (cart.GetCount() == 5)
-                return RedirectToAction("Index", "ShoppingCart");
-
-            return RedirectToAction(actionName, controllerName);
+            return RedirectToAction("Details", "Store", new { id = id });
         }
-
 
         public ActionResult RemoveFromCart(int id)
         {

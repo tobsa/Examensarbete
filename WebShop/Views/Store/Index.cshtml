@@ -21,6 +21,8 @@ type="text/javascript"></script>
                         location.reload();
                     if (data === "redirect")
                         location.href = "/ShoppingCart/Index";
+                    if (data === "itemexists")
+                        alert("Föremålet finns redan i din varukorg.");                    
                 });
             }
         });
