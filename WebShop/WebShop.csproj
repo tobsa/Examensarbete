@@ -139,6 +139,7 @@
     <Compile Include="Models\RecommendationResult.cs" />
     <Compile Include="Models\SampleData.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
+    <Compile Include="Models\UniqueUsername.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecommendationSystem\CosineSimilarity.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="RecommendationSystem\PurchaseData.cs" />
     <Compile Include="RecommendationSystem\RecommendationCalculator.cs" />
     <Compile Include="ViewModels\CheckoutCompleteViewModel.cs" />
+    <Compile Include="ViewModels\ChooseProductViewModel.cs" />
     <Compile Include="ViewModels\ShoppingCartRemoveViewModel.cs" />
     <Compile Include="ViewModels\ShoppingCartViewModel.cs" />
     <Compile Include="ViewModels\StoreViewModel.cs" />
@@ -317,6 +319,7 @@
     <Content Include="Views\Checkout\CompleteFinished.cshtml" />
     <Content Include="Views\Home\WebstoreInstruction.cshtml" />
     <Content Include="Views\Home\RetailInstruction.cshtml" />
+    <Content Include="Views\Checkout\ChooseProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

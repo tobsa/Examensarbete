@@ -1,0 +1,36 @@
+﻿@model WebShop.ViewModels.ChooseProductViewModel
+
+@{
+    ViewBag.Title = "ChooseProduct";
+}
+
+<ul style="list-style-type: none">
+    @foreach (var product in Model.Products)
+    {
+        <li style="display: inline-block; width: 250px; padding: 25px;">
+            <div class="text-center">
+                <h4>@product.Name</h4>
+            </div>
+
+            <img alt="ImageUrl" src="@product.ImageThumbnailUrl" style="width: 200px; height: 300px;" />
+
+            <div class="text-center">
+
+                <p> @product.Description </p>
+                <p style="font-size: 16px; color: palevioletred; ">
+                    @String.Format("{0:F}", product.Price)
+                    <em>kr</em>
+                </p>
+                <p>
+                    @Html.ActionLink("Välj produkt", "ChooseProduct", "Checkout", new
+                       {
+                           recommendedProductId = Model.RecommendedProduct == null ? -1 : Model.RecommendedProduct.ProductId,
+                           orderId = Model.Order.OrderId,
+                           selectedProductId = product.ProductId
+                       }, new { @class = "btn btn-primary" })
+                </p>
+
+            </div>
+        </li>
+    }
+</ul>

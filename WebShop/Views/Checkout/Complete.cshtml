@@ -4,55 +4,62 @@
     ViewBag.Title = "Checkout Complete";
 }
 
-<h2>Var vänlig välj en produkt du gillar</h2>
-
-@*<h4> Rekommenderad produkt: </h4>
+<h2>Vi rekommenderar den här produkten till dig</h2>
+<hr />
 
 @if (Model.RecommendedProduct == null)
 {
-   <p>No recommendation available...</p> 
+    <p>Ingen rekommendation är tillgänglig...</p>
 }
 else
 {
-<div class="container">
+    <div class="container">
 
-    <div class="row">
+        <div class="row">
 
-        <div class="col-md-5">
-            <a href="@Url.Action("Details", "Store", new { Id = Model.RecommendedProduct.ProductId})">
-                <img alt="ImageUrl" src="@Model.RecommendedProduct.ImageUrl" style="width: 250px; height: auto;" />
-            </a>
-        </div>
+            <div class="col-md-5">
+                <a href="@Url.Action("Details", "Store", new { Id = Model.RecommendedProduct.ProductId})">
+                    <img alt="ImageUrl" src="@Model.RecommendedProduct.ImageUrl" style="width: 250px; height: auto;" />
+                </a>
+            </div>
 
-        <div class="col-md-7">
-            <h2> @Html.ActionLink(Model.RecommendedProduct.Name, "Details", "Store", new { Id = Model.RecommendedProduct.ProductId }, null) </h2>
+            <div class="col-md-7">
+                <h2> @Html.ActionLink(Model.RecommendedProduct.Name, "Details", "Store", new { Id = Model.RecommendedProduct.ProductId }, null) </h2>
 
-            <hr />
+                <hr />
 
-            <p> @Model.RecommendedProduct.Description </p>
+                <p> @Model.RecommendedProduct.Description </p>
 
-            <p style="font-size: 24px; color: palevioletred; ">
-                @String.Format("{0:F}", Model.RecommendedProduct.Price)
-                <em>kr</em>
-            </p>
+                <p style="font-size: 24px; color: palevioletred; ">
+                    @String.Format("{0:F}", Model.RecommendedProduct.Price)
+                    <em>kr</em>
+                </p>
 
-            <p> Leveranstid 2-5 arbetsdagar </p>
+                <p> Leveranstid 2-5 arbetsdagar </p>
 
-            <p>
-                @Html.ActionLink("Välj produkt", "ChooseProduct", "Checkout", new {
-                    recommendedProductId = Model.RecommendedProduct.ProductId,
-                    orderId = Model.Order.OrderId,
-                    selectedProductId = Model.RecommendedProduct.ProductId
-                }, new { @class = "btn btn-primary" })
-            </p>
+                <p>
+                    @*@Html.ActionLink("Välj produkt", "ChooseProduct", "Checkout", new
+               {
+                   recommendedProductId = Model.RecommendedProduct.ProductId,
+                   orderId = Model.Order.OrderId,
+                   selectedProductId = Model.RecommendedProduct.ProductId
+               }, new { @class = "btn btn-primary" })
+                </p>*@
+            </div>
         </div>
     </div>
-</div>
-}*@
-
-@if (Model.IsWebOrder)
-{
     <hr />
+    
+    <div>
+        @Html.ActionLink("Gå vidare", "ProcessOrder", "Checkout", new
+        {
+            recommendedProductId = Model.RecommendedProduct.ProductId,
+            orderId = Model.Order.OrderId
+        }, new { @class = "btn btn-primary" })
+    </div>
+}
+
+@*<hr />
 
     <ul style="list-style-type: none">
         @foreach (var product in Model.Products)
@@ -72,16 +79,16 @@ else
                         <em>kr</em>
                     </p>
                     <p>
-                        @Html.ActionLink("Välj produkt", "ChooseProduct", "Checkout", new {
-                               recommendedProductId = Model.RecommendedProduct == null ? -1 : Model.RecommendedProduct.ProductId,
-                               orderId = Model.Order.OrderId,
-                               selectedProductId = product.ProductId
-                           }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Välj produkt", "ChooseProduct", "Checkout", new
+                       {
+                           recommendedProductId = Model.RecommendedProduct == null ? -1 : Model.RecommendedProduct.ProductId,
+                           orderId = Model.Order.OrderId,
+                           selectedProductId = product.ProductId
+                       }, new { @class = "btn btn-primary" })
                     </p>
 
                 </div>
             </li>
         }
-    </ul>
-}
+    </ul>*@
 

@@ -16,8 +16,8 @@ namespace WebShop.Controllers
         {
             var cart = ShoppingCart.GetCart(HttpContext);
 
-            //if (cart.GetCount() < 5)
-            //    return RedirectToAction("Index", "ShoppingCart");
+            if (cart.GetCount() < 5)
+                return RedirectToAction("Index", "ShoppingCart");
 
             return View();
         }
@@ -38,6 +38,16 @@ namespace WebShop.Controllers
             return View("CompleteFinished");
         }
 
+        public ActionResult ProcessOrder(int recommendedProductId, int orderId)
+        {
+            var model = new ChooseProductViewModel();
+            model.Order = db.Orders.ToList().Single(x => x.OrderId == orderId);
+            model.Products = db.Products.Where(x => x.IsInStore).ToList();
+            model.RecommendedProduct = db.Products.ToList().Single(x => x.ProductId == recommendedProductId);
+
+            return View("ChooseProduct", model);
+        }
+
         // POST: /Checkout/AddressAndPayment
         [HttpPost]
         public ActionResult AddressAndPayment(FormCollection values)
@@ -56,11 +66,15 @@ namespace WebShop.Controllers
                 order.IpAddress = Request.UserHostAddress;
                 order.IsWebOrder = Session["StoreType"] == null || (bool)Session["StoreType"];
 
-                //var users = db.Users.ToList();
-                //var orders = db.Orders.ToList();
+                var value = values["Kön"];
+                if (!string.IsNullOrEmpty(value))
+                    order.Sex = value.Equals("Man");
 
-                //if (!users.Exists(x => x.Username == username) || orders.Exists(x => x.Username == username))
-                //    return View(order);
+                var users = db.Users.ToList();
+                var orders = db.Orders.ToList();
+
+                if (!users.Exists(x => x.Username == username) || orders.Exists(x => x.Username == username))
+                    return View(order);
 
                 db.Orders.Add(order);
                 db.SaveChanges();
