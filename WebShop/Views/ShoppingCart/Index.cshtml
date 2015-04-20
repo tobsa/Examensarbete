@@ -5,6 +5,12 @@
     ViewBag.Title = "Shopping Cart";
 }
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[data-toggle=tooltip]').tooltip();
+    });
+</script>
+
 <div class="panel panel-body panel-default">
     <h3>Kontrollera din varukorg:</h3>
 
@@ -34,7 +40,16 @@
     </div>
 
     <div class="pull-left">
-        @Html.ActionLink("Bekräfta köp", "AddressAndPayment", "Checkout", null, new { @class = "btn btn-primary"})
+        @if (Model.CartItems.Count < 5)
+        {
+            <button type="button" class="btn btn-primary disabled">Bekräfta köp</button>
+        }
+        else
+        {
+            @Html.ActionLink("Bekräfta köp", "AddressAndPayment", "Checkout", null, new { @class = "btn btn-primary" })
+        }
+
+        
         @Html.ActionLink("Fortsätt handla", "Index", "Store", null, new { @class = "btn btn-primary" })
     </div>
 

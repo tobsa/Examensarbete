@@ -12,11 +12,15 @@ namespace WebShop.Models
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if (value == null)
+                return ValidationResult.Success;
+
             string username = value.ToString();
 
+            if(db.Users.ToList().Exists(x => x.Username == username))
+                return ValidationResult.Success;
 
-
-            return ValidationResult.Success;
+            return new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
         }
     }
 }

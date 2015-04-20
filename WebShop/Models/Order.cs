@@ -13,6 +13,7 @@ namespace WebShop.Models
         [ScaffoldColumn(true)]
         [Required(ErrorMessage = "Du måste ange ett användarnamn")]
         [DisplayName("Användarnamn")]
+        [UniqueUsername(ErrorMessage="Du måste ange ett giltigt användarnamn")]
         public string Username { get; set; }
 
         [ScaffoldColumn(true)]
