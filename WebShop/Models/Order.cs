@@ -11,9 +11,20 @@ namespace WebShop.Models
         public int OrderId { get; set; }
 
         [ScaffoldColumn(true)]
-        [Required(ErrorMessage = "Du måste ange ett giltigt användarnamn")]
+        [Required(ErrorMessage = "Du måste ange ett användarnamn")]
         [DisplayName("Användarnamn")]
         public string Username { get; set; }
+
+        [ScaffoldColumn(true)]
+        [Range(1, 200, ErrorMessage = "Du måste ange ett tal mellan 1 och 200")]
+        [Required(ErrorMessage="Du måste ange en ålder")]
+        [DisplayName("Ålder")]
+        public int Age { get; set; }
+
+        [ScaffoldColumn(true)]
+        [DisplayName("Kön")]
+        [Required(ErrorMessage="Du måste ange kön")]
+        public bool? Sex { get; set; }
 
         [ScaffoldColumn(false)]
         public decimal Total { get; set; }

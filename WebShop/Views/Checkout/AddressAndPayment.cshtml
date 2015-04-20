@@ -12,11 +12,32 @@
     
 
     <fieldset>
-        <legend>
-            <h2>Användaruppgifter</h2>
-        </legend>
+        <h2>Användaruppgifter</h2>
+        <hr />
 
-        @Html.EditorForModel()
+        @Html.ValidationSummary(true)
+
+        <div style="margin-bottom: 13px;">
+            <h4>@Html.DisplayNameFor(x => x.Username)</h4>
+            @Html.EditorFor(x => x.Username)
+            @Html.ValidationMessageFor(x => x.Username)
+        </div>
+        <div style="margin-bottom: 13px;">
+            <h4>@Html.DisplayNameFor(x => x.Age)</h4>
+            @Html.EditorFor(x => x.Age)
+            @Html.ValidationMessageFor(x => x.Age)
+        </div>
+        <div style="margin-bottom: 15px;">
+            <h4>@Html.DisplayNameFor(x => x.Sex) </h4>
+            @Html.DropDownList("Kön", new List<SelectListItem>()
+               {
+                   new SelectListItem() { Text = "Man", Value = "Man"},
+                   new SelectListItem() { Text = "Kvinna", Value = "Kvinna"}
+               }, "")
+            @Html.ValidationMessageFor(x => x.Sex)
+        </div>
+
+        @*@Html.EditorForModel()*@
     </fieldset>
     
     <br />
