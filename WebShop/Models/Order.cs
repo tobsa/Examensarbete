@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using WebShop.CustomAnnotations;
 
 namespace WebShop.Models
 {
@@ -14,6 +15,7 @@ namespace WebShop.Models
         [Required(ErrorMessage = "Du måste ange ett användarnamn")]
         [DisplayName("Användarnamn")]
         [UniqueUsername(ErrorMessage="Du måste ange ett giltigt användarnamn")]
+        [UniqueUsernameOnce(ErrorMessage="Det här användarnamnet har redan använts")]
         public string Username { get; set; }
 
         [ScaffoldColumn(true)]

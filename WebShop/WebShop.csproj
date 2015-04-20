@@ -126,6 +126,7 @@
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\StoreManagerController.cs" />
+    <Compile Include="CustomAnnotations\UniqueUsernameOnce.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -139,7 +140,7 @@
     <Compile Include="Models\RecommendationResult.cs" />
     <Compile Include="Models\SampleData.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
-    <Compile Include="Models\UniqueUsername.cs" />
+    <Compile Include="CustomAnnotations\UniqueUsername.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecommendationSystem\CosineSimilarity.cs" />

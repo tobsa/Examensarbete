@@ -19,6 +19,7 @@ namespace WebShop.Controllers
             if (cart.GetCount() < 5)
                 return RedirectToAction("Index", "ShoppingCart");
 
+            SetViewBag(null);
             return View();
         }
 
@@ -74,7 +75,11 @@ namespace WebShop.Controllers
                 var orders = db.Orders.ToList();
 
                 if (!users.Exists(x => x.Username == username) || orders.Exists(x => x.Username == username))
+                {
+                    SetViewBag(order);
                     return View(order);
+                }
+                    
 
                 db.Orders.Add(order);
                 db.SaveChanges();
@@ -104,8 +109,23 @@ namespace WebShop.Controllers
             }
             catch
             {
+                SetViewBag(order);
                 //Invalid - redisplay with errors
                 return View(order);
+            }
+        }
+
+        private void SetViewBag(Order order)
+        {
+            if (order == null)
+            {
+                ViewBag.SelectedItem1 = false;
+                ViewBag.SelectedItem2 = false;
+            }
+            else
+            {
+                ViewBag.SelectedItem1 = order.Sex != null && (bool)order.Sex;
+                ViewBag.SelectedItem2 = order.Sex != null && !(bool)order.Sex;
             }
         }
     }

@@ -28,7 +28,7 @@ namespace WebShop.Controllers
         {
             var cart = ShoppingCart.GetCart(HttpContext);
 
-            ar addedProduct = db.Products.Single(product => product.ProductId == id);
+            var addedProduct = db.Products.Single(product => product.ProductId == id);
 
             bool foundItemInCart = cart.GetCartItems().Exists(x => x.ProductId == id);
             if (foundItemInCart)

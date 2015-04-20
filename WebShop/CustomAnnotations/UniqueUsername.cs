@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using WebShop.Models;
 
-namespace WebShop.Models
+namespace WebShop.CustomAnnotations
 {
     public class UniqueUsername : ValidationAttribute
     {
