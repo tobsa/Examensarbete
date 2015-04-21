@@ -89,7 +89,9 @@ namespace WebShop.Models
 
         public List<Cart> GetCartItems()
         {
-            return db.Carts.Where(cart => cart.CartId == ShoppingCartId).ToList();
+            var d = db.Carts.Where(cart => cart.CartId == ShoppingCartId).ToList();
+
+            return d;
         }
 
         public int GetCount()

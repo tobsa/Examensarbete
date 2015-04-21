@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WebShop.Models;
 
@@ -63,6 +64,14 @@ namespace WebShop.RecommendationSystem
                 }
             }
 
+            if (products.Count == 0)
+            {
+                Random random = new Random();
+                var instoreProducts = db.Products.Where(x => x.IsInStore).ToList();
+
+                return instoreProducts[random.Next(instoreProducts.Count)].ProductId;
+            }
+                
             return products.OrderByDescending(product => product.Value).First().Key;
         }
 
