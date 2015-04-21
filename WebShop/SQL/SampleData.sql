@@ -86,12 +86,12 @@ INSERT INTO [User] VALUES
 ('dwb3x'),('j4ogv'),('ny4yq'),('xlc0s');
 
 DELETE FROM [Order];
-INSERT INTO [Order](Username, Total, OrderDate, IsWebOrder, IpAddress) VALUES
-('Tobias1', 2500, '2015-04-10 13:37:00', 1, '193.11.73.8'),
-('Tobias2', 2500, '2015-04-11 13:37:00', 1, '193.11.73.8'),
-('Tobias3', 2500, '2015-04-12 13:37:00', 1, '193.11.73.8'),
-('Tobias4', 2500, '2015-04-13 13:37:00', 1, '193.11.73.8'),
-('Tobias5', 2500, '2015-04-14 13:37:00', 1, '193.11.73.8');
+INSERT INTO [Order](Username, Total, OrderDate, IsWebOrder, IpAddress, Age, Sex) VALUES
+('Tobias1', 2500, '2015-04-10 13:37:00', 1, '193.11.73.8', 25, 0),
+('Tobias2', 2500, '2015-04-11 13:37:00', 1, '193.11.73.8', 25, 0),
+('Tobias3', 2500, '2015-04-12 13:37:00', 1, '193.11.73.8', 25, 1),
+('Tobias4', 2500, '2015-04-13 13:37:00', 1, '193.11.73.8', 25, 1),
+('Tobias5', 2500, '2015-04-14 13:37:00', 1, '193.11.73.8', 25, 1);
 
 DELETE FROM [OrderDetail];
 INSERT INTO [OrderDetail](OrderId, ProductId, Quantity, UnitPrice) VALUES

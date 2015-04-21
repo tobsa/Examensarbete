@@ -42,11 +42,11 @@
     <div class="pull-left">
         @if (Model.CartItems.Count < 5)
         {
-            <button type="button" class="btn btn-primary disabled">Bekräfta köp</button>
+            <button type="button" class="btn btn-primary disabled">Bekräfta varor</button>
         }
         else
         {
-            @Html.ActionLink("Bekräfta köp", "AddressAndPayment", "Checkout", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Bekräfta varor", "AddressAndPayment", "Checkout", null, new { @class = "btn btn-primary" })
         }
 
         
