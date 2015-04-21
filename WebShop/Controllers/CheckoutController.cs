@@ -71,14 +71,14 @@ namespace WebShop.Controllers
                 if (!string.IsNullOrEmpty(value))
                     order.Sex = value.Equals("Man");
 
-                var users = db.Users.ToList();
-                var orders = db.Orders.ToList();
+                //var users = db.Users.ToList();
+                //var orders = db.Orders.ToList();
 
-                if (!users.Exists(x => x.Username == username) || orders.Exists(x => x.Username == username))
-                {
-                    SetViewBag(order);
-                    return View(order);
-                }
+                //if (!users.Exists(x => x.Username == username) || orders.Exists(x => x.Username == username))
+                //{
+                //    SetViewBag(order);
+                //    return View(order);
+                //}
                     
 
                 db.Orders.Add(order);

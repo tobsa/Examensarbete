@@ -12,10 +12,10 @@ namespace WebShop.Models
         public int OrderId { get; set; }
 
         [ScaffoldColumn(true)]
-        [Required(ErrorMessage = "Du måste ange ett användarnamn")]
+        //[Required(ErrorMessage = "Du måste ange ett användarnamn")]
         [DisplayName("Användarnamn")]
-        [UniqueUsername(ErrorMessage="Du måste ange ett giltigt användarnamn")]
-        [UniqueUsernameOnce(ErrorMessage="Det här användarnamnet har redan använts")]
+        //[UniqueUsername(ErrorMessage="Du måste ange ett giltigt användarnamn")]
+        //[UniqueUsernameOnce(ErrorMessage="Det här användarnamnet har redan använts")]
         public string Username { get; set; }
 
         [ScaffoldColumn(true)]

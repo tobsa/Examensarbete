@@ -7,7 +7,7 @@ namespace WebShop.RecommendationSystem
 {
     public class RecommendationCalculator
     {
-        private const int KNearest = 2;
+        private const int KNearest = 12;
         private ProductContext db = new ProductContext();
 
         public Product RecommendProduct(Order order, ISimilarityCalculable calculable)
