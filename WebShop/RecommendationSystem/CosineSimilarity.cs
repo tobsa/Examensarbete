@@ -13,6 +13,8 @@ namespace WebShop.RecommendationSystem
             var magnitude1 = Magnitude(data1);
             var magnitude2 = Magnitude(data2);
 
+            if (magnitude1 == 0 || magnitude2 == 0)
+                return 0;
             return dotProduct / (magnitude1 * magnitude2);
         }
 

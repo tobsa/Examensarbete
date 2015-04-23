@@ -93,13 +93,14 @@ namespace WebShop.Controllers
                 var inStoreItems = products.Where(x => x.IsInStore).ToList();
 
                 RecommendationCalculator calculator = new RecommendationCalculator();
-                var recommendedProduct = calculator.RecommendProduct(order, new CosineSimilarity());
+                var recommendedProduct1 = calculator.RecommendProductItemBased(order, new CosineSimilarity());
+                var recommendedProduct2 = calculator.RecommendProductUserBased(order, new CosineSimilarity());
 
                 // If we can't find a recommended product then choose a random product instead to recommend
-                if (recommendedProduct == null)
+                if (recommendedProduct1 == null)
                     model.RecommendedProduct = null; //inStoreItems[random.Next(inStoreItems.Count)];
                 else 
-                    model.RecommendedProduct = recommendedProduct;
+                    model.RecommendedProduct = recommendedProduct1;
 
                 model.Order = order;
                 model.Products = inStoreItems;
