@@ -86,7 +86,6 @@ namespace WebShop.Controllers
 
                 cart.CreateOrder(order);
 
-                var random = new Random();
                 var products = db.Products.ToList();
                 var model = new CheckoutCompleteViewModel();
 
@@ -98,7 +97,7 @@ namespace WebShop.Controllers
 
                 // If we can't find a recommended product then choose a random product instead to recommend
                 if (recommendedProduct1 == null)
-                    model.RecommendedProduct = null; //inStoreItems[random.Next(inStoreItems.Count)];
+                    model.RecommendedProduct = null;
                 else 
                     model.RecommendedProduct = recommendedProduct1;
 

@@ -150,20 +150,24 @@ namespace WebShop.RecommendationSystem
             var sortedRecommendation = recommendations.OrderByDescending(product => product.Value);
             var filteredRecommendations = sortedRecommendation.Where(product => inStore.Contains(product.Key)).ToList();
 
-            int recommendedProduct = -1;
-            foreach (var recommendation in filteredRecommendations)
-            {
-                if (inStore.Contains(recommendation.Key))
-                {
-                    recommendedProduct = recommendation.Key;
-                    LogResult("\r\nItemBased", purchase.OrderID, recommendedProduct, false, filteredRecommendations);
-                    return recommendedProduct;
-                }
-            }
+            int recommendedProduct = -1; 
 
-            // TODO: Make this look if similarity is zero instead
-            recommendedProduct = inStore[new Random().Next(inStore.Count)];
-            LogResult("\r\nItemBased", purchase.OrderID, recommendedProduct, true, filteredRecommendations);
+            if (filteredRecommendations.Count == 0)
+            {
+                recommendedProduct = inStore[new Random().Next(inStore.Count)];
+                LogResult("\r\nItemBased", purchase.OrderID, recommendedProduct, true, filteredRecommendations);
+                return recommendedProduct;
+            }
+                
+            if (filteredRecommendations.First().Value == 0)
+            {
+                recommendedProduct = inStore[new Random().Next(inStore.Count)];
+                LogResult("\r\nItemBased", purchase.OrderID, recommendedProduct, true, filteredRecommendations);
+                return recommendedProduct;
+            }                
+
+            recommendedProduct = filteredRecommendations.First().Key;
+            LogResult("\r\nItemBased", purchase.OrderID, recommendedProduct, false, filteredRecommendations);
             return recommendedProduct;
         }
         private int FindRecommendationUserBased(List<PurchaseData> purchaseData, PurchaseData p)
