@@ -36,7 +36,7 @@ namespace WebShop.Controllers
                 db.SaveChanges();
             }
 
-            return View("CompleteFinished");
+            return View("CompleteFinished", orderId);
         }
 
         public ActionResult ProcessOrder(int recommendedProductId, int orderId)
