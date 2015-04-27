@@ -105,7 +105,7 @@ namespace WebShop.Controllers
                 model.Products = inStoreItems;
                 model.IsWebOrder = order.IsWebOrder;
 
-                return View("Complete", model);          
+                return View("Complete", model);
             }
             catch
             {

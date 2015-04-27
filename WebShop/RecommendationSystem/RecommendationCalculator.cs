@@ -258,7 +258,8 @@ namespace WebShop.RecommendationSystem
 
         private void LogResult(string message, int orderId, int productId, bool random, List<KeyValuePair<int, double>> recommendations)
         {
-            using (StreamWriter w = File.AppendText("log.txt"))
+            //using (StreamWriter w = File.AppendText("Log.txt"))
+            using (StreamWriter w = File.AppendText(@"c:\exjobb-kristoffer-tobias\log.txt"))
             {
                 w.WriteLine(message + " ---------------");
                 w.WriteLine("K-value: " + KNearest);
