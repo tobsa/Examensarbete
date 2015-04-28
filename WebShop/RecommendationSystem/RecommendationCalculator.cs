@@ -69,10 +69,10 @@ namespace WebShop.RecommendationSystem
                     var similarity = new ItemSimilarity();
                     similarity.ProductId = itemData[j].ProductId;
 
-                    if(j == i) continue;
-
                     var data2 = itemData[j];
-                    similarity.Similarity = calculable.CalculateSimilarity(data1.PurchasedByCustomer, data2.PurchasedByCustomer);
+
+                    if (j != i)
+                        similarity.Similarity = calculable.CalculateSimilarity(data1.PurchasedByCustomer, data2.PurchasedByCustomer);
                     data1.SimilarityVector.Add(similarity);
                 }
             }
