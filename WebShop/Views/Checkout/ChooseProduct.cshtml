@@ -24,7 +24,8 @@
                 <p>
                     @Html.ActionLink("Välj produkt", "ChooseProduct", "Checkout", new
                        {
-                           recommendedProductId = Model.RecommendedProduct == null ? -1 : Model.RecommendedProduct.ProductId,
+                           itemRecommendedProductId = Model.ItemRecommendedProduct == null ? -1 : Model.ItemRecommendedProduct.ProductId,
+                           userRecommendedProductId = Model.UserRecommendedProduct == null ? -1 : Model.UserRecommendedProduct.ProductId,
                            orderId = Model.Order.OrderId,
                            selectedProductId = product.ProductId
                        }, new { @class = "btn btn-primary" })

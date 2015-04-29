@@ -7,7 +7,7 @@
 <h2>Vi rekommenderar den här produkten till dig</h2>
 <hr />
 
-@if (Model.RecommendedProduct == null)
+@if (Model.ItemRecommendedProduct == null)
 {
     <p>Ingen rekommendation är tillgänglig...</p>
 }
@@ -18,20 +18,20 @@ else
         <div class="row">
 
             <div class="col-md-5">
-                <a href="@Url.Action("Details", "Store", new { Id = Model.RecommendedProduct.ProductId})">
-                    <img alt="ImageUrl" src="@Model.RecommendedProduct.ImageUrl" style="width: 250px; height: auto;" />
+                <a href="@Url.Action("Details", "Store", new { Id = Model.ItemRecommendedProduct.ProductId})">
+                    <img alt="ImageUrl" src="@Model.ItemRecommendedProduct.ImageUrl" style="width: 250px; height: auto;" />
                 </a>
             </div>
 
             <div class="col-md-7">
-                <h2> @Html.ActionLink(Model.RecommendedProduct.Name, "Details", "Store", new { Id = Model.RecommendedProduct.ProductId }, null) </h2>
+                <h2> @Html.ActionLink(Model.ItemRecommendedProduct.Name, "Details", "Store", new { Id = Model.ItemRecommendedProduct.ProductId }, null) </h2>
 
                 <hr />
 
-                <p> @Model.RecommendedProduct.Description </p>
+                <p> @Model.ItemRecommendedProduct.Description </p>
 
                 <p style="font-size: 24px; color: palevioletred; ">
-                    @String.Format("{0:F}", Model.RecommendedProduct.Price)
+                    @String.Format("{0:F}", Model.ItemRecommendedProduct.Price)
                     <em>kr</em>
                 </p>
 
@@ -40,9 +40,9 @@ else
                 <p>
                     @*@Html.ActionLink("Välj produkt", "ChooseProduct", "Checkout", new
                {
-                   recommendedProductId = Model.RecommendedProduct.ProductId,
+                   itemRecommendedProductId = Model.ItemRecommendedProduct.ProductId,
                    orderId = Model.Order.OrderId,
-                   selectedProductId = Model.RecommendedProduct.ProductId
+                   selectedProductId = Model.ItemRecommendedProduct.ProductId
                }, new { @class = "btn btn-primary" })
                 </p>*@
             </div>
@@ -53,7 +53,8 @@ else
     <div>
         @Html.ActionLink("Gå vidare", "ProcessOrder", "Checkout", new
         {
-            recommendedProductId = Model.RecommendedProduct.ProductId,
+            itemRecommendedProductId = Model.ItemRecommendedProduct.ProductId,
+            userRecommendedProductId = Model.UserRecommendedProduct.ProductId,
             orderId = Model.Order.OrderId
         }, new { @class = "btn btn-primary" })
     </div>
@@ -81,7 +82,7 @@ else
                     <p>
                         @Html.ActionLink("Välj produkt", "ChooseProduct", "Checkout", new
                        {
-                           recommendedProductId = Model.RecommendedProduct == null ? -1 : Model.RecommendedProduct.ProductId,
+                           itemRecommendedProductId = Model.ItemRecommendedProduct == null ? -1 : Model.ItemRecommendedProduct.ProductId,
                            orderId = Model.Order.OrderId,
                            selectedProductId = product.ProductId
                        }, new { @class = "btn btn-primary" })

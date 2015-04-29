@@ -10,6 +10,8 @@ namespace WebShop.ViewModels
     {
         public Order Order { get; set; }
         public List<Product> Products { get; set; }
-        public Product RecommendedProduct { get; set; }
+        public Product ItemRecommendedProduct { get; set; }
+
+        public Product UserRecommendedProduct { get; set; }
     }
 }

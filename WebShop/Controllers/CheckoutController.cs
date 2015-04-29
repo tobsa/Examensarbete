@@ -23,12 +23,13 @@ namespace WebShop.Controllers
             return View();
         }
 
-        public ActionResult ChooseProduct(int recommendedProductId, int orderId, int selectedProductId)
+        public ActionResult ChooseProduct(int itemRecommendedProductId, int userRecommendedProductId, int orderId, int selectedProductId)
         {
             var result = new RecommendationResult();
             result.OrderId = orderId;
-            result.RecommendedProductID = recommendedProductId;
-            result.SelectedProductID = selectedProductId;
+            result.SelectedProductId = selectedProductId;
+            result.ItemRecommendedProductId = itemRecommendedProductId;
+            result.UserRecommendedProductId = userRecommendedProductId;
 
             if (!db.RecommendationResults.ToList().Exists(x => x.OrderId == orderId))
             {
@@ -39,12 +40,13 @@ namespace WebShop.Controllers
             return View("CompleteFinished", orderId);
         }
 
-        public ActionResult ProcessOrder(int recommendedProductId, int orderId)
+        public ActionResult ProcessOrder(int itemRecommendedProductId, int userRecommendedProductId, int orderId)
         {
             var model = new ChooseProductViewModel();
             model.Order = db.Orders.ToList().Single(x => x.OrderId == orderId);
             model.Products = db.Products.Where(x => x.IsInStore).ToList();
-            model.RecommendedProduct = db.Products.ToList().Single(x => x.ProductId == recommendedProductId);
+            model.ItemRecommendedProduct = db.Products.ToList().Single(x => x.ProductId == itemRecommendedProductId);
+            model.UserRecommendedProduct = db.Products.ToList().Single(x => x.ProductId == userRecommendedProductId);
 
             return View("ChooseProduct", model);
         }
@@ -92,14 +94,18 @@ namespace WebShop.Controllers
                 var inStoreItems = products.Where(x => x.IsInStore).ToList();
 
                 RecommendationCalculator calculator = new RecommendationCalculator();
-                var recommendedProduct1 = calculator.RecommendProductItemBased(order, new CosineSimilarity());
-                var recommendedProduct2 = calculator.RecommendProductUserBased(order, new CosineSimilarity());
+                int itemKNearest = 12;
+                int userKNearest = 12;
+                var itemRecommendedProduct = calculator.RecommendProductItemBased(order, new CosineSimilarity(), itemKNearest);
+                var userRecommendedProduct = calculator.RecommendProductUserBased(order, new CosineSimilarity(),userKNearest);
 
                 // If we can't find a recommended product then choose a random product instead to recommend
-                if (recommendedProduct1 == null)
-                    model.RecommendedProduct = null;
+                if (itemRecommendedProduct == null)
+                    model.ItemRecommendedProduct = null;
                 else 
-                    model.RecommendedProduct = recommendedProduct1;
+                    model.ItemRecommendedProduct = itemRecommendedProduct;
+
+                model.UserRecommendedProduct = userRecommendedProduct;
 
                 model.Order = order;
                 model.Products = inStoreItems;

@@ -21,21 +21,42 @@ namespace WebShop.RecommendationSystem
 
     public class RecommendationCalculator
     {
-        private const int KNearest = 12;
-        private ProductContext db = new ProductContext();
-
         private List<Product> _products;
+        private List<Order> _orders;
+        private List<OrderDetail> _orderDetails;
+        private List<RecommendationResult> _recommendationResults; 
 
+        private string _logPath;
         public RecommendationCalculator()
         {
+            ProductContext db = new ProductContext();
+
+            //_logPath = @"c:\exjobb-kristoffer-tobias\log.txt";
+            _logPath = @"c:\log.txt";
             _products = db.Products.ToList();
+            _orders = db.Orders.ToList();
+            _orderDetails = db.OrderDetails.ToList();
+            _recommendationResults = db.RecommendationResults.ToList();
 
             PurchaseData.ProductIDs = new int[_products.Count];
             for (int i = 0; i < _products.Count; i++)
                 PurchaseData.ProductIDs[i] = _products[i].ProductId;
         }
 
-        public Product RecommendProductUserBased(Order order, ISimilarityCalculable calculable)
+        public RecommendationCalculator(string logPath, List<Product> products,List<Order> orders, List<OrderDetail> orderDetails, List<RecommendationResult> recommendationResults)
+        {
+            _logPath = logPath;
+            _products = products;
+            _orders = orders;
+            _orderDetails = orderDetails;
+            _recommendationResults = recommendationResults;
+
+            PurchaseData.ProductIDs = new int[_products.Count];
+            for (int i = 0; i < _products.Count; i++)
+                PurchaseData.ProductIDs[i] = _products[i].ProductId;
+        }
+
+        public Product RecommendProductUserBased(Order order, ISimilarityCalculable calculable, int kNearest)
         {
             var purchaseData = GetPurchaseData();
 
@@ -47,7 +68,7 @@ namespace WebShop.RecommendationSystem
                     data2.Similarity = calculable.CalculateSimilarity(data1.Data, data2.Data);
             }
 
-            var result = FindRecommendationUserBased(purchaseData, data1);
+            var result = FindRecommendationUserBased(purchaseData, data1, kNearest);
 
             if (result == -1)
                 return null;
@@ -55,7 +76,7 @@ namespace WebShop.RecommendationSystem
             return _products.ToList().SingleOrDefault(x => x.ProductId == result);
         }
 
-        public Product RecommendProductItemBased(Order order, ISimilarityCalculable calculable)
+        public Product RecommendProductItemBased(Order order, ISimilarityCalculable calculable, int kNearest)
         {
             var itemData = GetItemData();
             var currentPurchase = ConvertToPurchaseData(order);
@@ -77,7 +98,7 @@ namespace WebShop.RecommendationSystem
                 }
             }
 
-            var result = FindRecommendationItemBased(itemData, currentPurchase);
+            var result = FindRecommendationItemBased(itemData, currentPurchase, kNearest);
 
             if (result == -1)
                 return null;
@@ -90,9 +111,9 @@ namespace WebShop.RecommendationSystem
         {
             var purchaseData = GetPurchaseData();
 
-            int numCustomers = db.Orders.Count();
+            int numCustomers = _orders.Count();
 
-            var chosenInStore = db.RecommendationResults.ToList();
+            var chosenInStore = _recommendationResults.ToList();
 
             List<ItemData> itemSimilarity = new List<ItemData>();
 
@@ -111,7 +132,7 @@ namespace WebShop.RecommendationSystem
                     // Add in store products
                     foreach (var product in chosenInStore)
                     {
-                        if (purchaseData[j].OrderID == product.OrderId && product.SelectedProductID == itemData.ProductId)
+                        if (purchaseData[j].OrderID == product.OrderId && product.SelectedProductId == itemData.ProductId)
                             itemData.PurchasedByCustomer[j] = 1;
                     }
                 }
@@ -120,7 +141,7 @@ namespace WebShop.RecommendationSystem
             return itemSimilarity;
         }
 
-        private int FindRecommendationItemBased(List<ItemData> itemData, PurchaseData purchase)
+        private int FindRecommendationItemBased(List<ItemData> itemData, PurchaseData purchase, int kNearest)
         {
             List<int> purchaseProducts = new List<int>();
 
@@ -134,7 +155,7 @@ namespace WebShop.RecommendationSystem
                 if (purchaseProducts.Contains(product.ProductId))
                 {
                     // Get k-most similar items
-                    var productSimilarities = product.SimilarityVector.OrderByDescending(item => item.Similarity).ToList().GetRange(0, KNearest);
+                    var productSimilarities = product.SimilarityVector.OrderByDescending(item => item.Similarity).ToList().GetRange(0, kNearest);
 
                     foreach (var item in productSimilarities)
                     {
@@ -155,28 +176,28 @@ namespace WebShop.RecommendationSystem
             if (filteredRecommendations.Count == 0)
             {
                 recommendedProduct = inStore[new Random().Next(inStore.Count)];
-                LogResult("\r\nItemBased", purchase.OrderID, recommendedProduct, true, filteredRecommendations);
+                LogResult("ItemBased", kNearest, purchase.OrderID, recommendedProduct, true, filteredRecommendations);
                 return recommendedProduct;
             }
                 
             if (filteredRecommendations.First().Value == 0)
             {
                 recommendedProduct = inStore[new Random().Next(inStore.Count)];
-                LogResult("\r\nItemBased", purchase.OrderID, recommendedProduct, true, filteredRecommendations);
+                LogResult("ItemBased", kNearest, purchase.OrderID, recommendedProduct, true, filteredRecommendations);
                 return recommendedProduct;
             }                
 
             recommendedProduct = filteredRecommendations.First().Key;
-            LogResult("\r\nItemBased", purchase.OrderID, recommendedProduct, false, filteredRecommendations);
+            LogResult("ItemBased", kNearest, purchase.OrderID, recommendedProduct, false, filteredRecommendations);
             return recommendedProduct;
         }
-        private int FindRecommendationUserBased(List<PurchaseData> purchaseData, PurchaseData p)
+        private int FindRecommendationUserBased(List<PurchaseData> purchaseData, PurchaseData p, int kNearest)
         {
             List<PurchaseData> purchases;
 
             // Use k-nearest if possible
-            if (purchaseData.Count >= KNearest)
-                purchases = purchaseData.OrderByDescending(purchase => purchase.Similarity).ToList().GetRange(0, KNearest);
+            if (purchaseData.Count >= kNearest)
+                purchases = purchaseData.OrderByDescending(purchase => purchase.Similarity).ToList().GetRange(0, kNearest);
             // else as many as possible
             else
                 purchases = purchaseData.OrderByDescending(purchase => purchase.Similarity).ToList();
@@ -189,15 +210,15 @@ namespace WebShop.RecommendationSystem
 
             // Sum weighted similarity for each product
             var recommendations = new Dictionary<int, double>();
-            var chosenInStore = db.RecommendationResults.ToList();
+            var chosenInStore = _recommendationResults;
             foreach (PurchaseData purchase in purchases)
             {
                 foreach (var recommendationResult in chosenInStore.Where(r => r.OrderId == purchase.OrderID))
                 {
-                    if(recommendations.ContainsKey(recommendationResult.SelectedProductID))
-                        recommendations[recommendationResult.SelectedProductID] += purchase.Influence;
+                    if(recommendations.ContainsKey(recommendationResult.SelectedProductId))
+                        recommendations[recommendationResult.SelectedProductId] += purchase.Influence;
                     else
-                        recommendations.Add(recommendationResult.SelectedProductID, purchase.Influence);
+                        recommendations.Add(recommendationResult.SelectedProductId, purchase.Influence);
                 }
             }
 
@@ -212,11 +233,11 @@ namespace WebShop.RecommendationSystem
                 var instoreProducts = _products.Where(x => x.IsInStore).ToList();
 
                 recommendedProduct = instoreProducts[random.Next(instoreProducts.Count)].ProductId;
-                LogResult("UserBased", p.OrderID, recommendedProduct, true, sortedRecommendations);
+                LogResult("UserBased", kNearest, p.OrderID, recommendedProduct, true, sortedRecommendations);
                 return recommendedProduct;
             }
 
-            LogResult("UserBased", p.OrderID, sortedRecommendations[0].Key, false, sortedRecommendations);
+            LogResult("UserBased", kNearest, p.OrderID, sortedRecommendations[0].Key, false, sortedRecommendations);
             recommendedProduct = sortedRecommendations[0].Key;
 
             return recommendedProduct;
@@ -224,10 +245,9 @@ namespace WebShop.RecommendationSystem
 
         private List<PurchaseData> GetPurchaseData()
         {
-            var orders = db.Orders.ToList();
             var purchaseData = new List<PurchaseData>();
 
-            foreach (var order in orders)
+            foreach (var order in _orders)
                 purchaseData.Add(ConvertToPurchaseData(order));
 
             return purchaseData;
@@ -235,7 +255,7 @@ namespace WebShop.RecommendationSystem
 
         private PurchaseData ConvertToPurchaseData(Order order)
         {
-            var orderDetails = db.OrderDetails.Where(o => o.OrderId == order.OrderId).ToList();
+            var orderDetails = _orderDetails.Where(o => o.OrderId == order.OrderId).ToList();
 
             PurchaseData data = new PurchaseData();
             data.OrderID = order.OrderId;
@@ -256,21 +276,18 @@ namespace WebShop.RecommendationSystem
             return data;
         }
 
-        private void LogResult(string message, int orderId, int productId, bool random, List<KeyValuePair<int, double>> recommendations)
+        private void LogResult(string message, int kNearest, int orderId, int productId, bool random, List<KeyValuePair<int, double>> recommendations)
         {
-            //using (StreamWriter w = File.AppendText("Log.txt"))
-            using (StreamWriter w = File.AppendText(@"c:\exjobb-kristoffer-tobias\log.txt"))
+            using (StreamWriter w = File.AppendText(_logPath))
             {
-                w.WriteLine(message + " ---------------");
-                w.WriteLine("K-value: " + KNearest);
-                w.WriteLine("Order ID: " + orderId);
-                w.WriteLine("Recommended product: " + productId);
-                w.WriteLine("Random: " + random);
-
+                w.WriteLine(message + " K-value: " + kNearest + "\tOrder ID: " + orderId + "\tRandom: " + random + "\tRecommended ID: " + productId);
+               
                 foreach (var recommendation in recommendations)
                 {
-                    w.WriteLine(" ID: " + recommendation.Key + " Similarity: " + Math.Round(recommendation.Value, 5));
+                    w.Write("\tID: " + recommendation.Key + " Similarity: " + Math.Round(recommendation.Value, 5));
                 }
+                w.WriteLine();
+                w.WriteLine();
                 w.Flush();
             }
         }
