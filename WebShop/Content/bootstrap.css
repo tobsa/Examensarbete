@@ -6815,6 +6815,6 @@ td.visible-print {
   }
 }
 
-.navbar-brand a {
+.navbar-brand>a {
   color: #fff;
 }
