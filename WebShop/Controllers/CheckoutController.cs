@@ -95,7 +95,7 @@ namespace WebShop.Controllers
 
                 RecommendationCalculator calculator = new RecommendationCalculator();
                 int itemKNearest = 12;
-                int userKNearest = 12;
+                int userKNearest = 7;
                 var itemRecommendedProduct = calculator.RecommendProductItemBased(order, new CosineSimilarity(), itemKNearest);
                 var userRecommendedProduct = calculator.RecommendProductUserBased(order, new CosineSimilarity(),userKNearest);
 
