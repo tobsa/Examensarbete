@@ -67,9 +67,8 @@ namespace WebShopTest
                                 secondHalfCorrect++;
                         }
                     }
-                    w.WriteLine("K: " + kNearest + " \tFirstHalf: " + firstHalfCorrect + " \tSecondHalf: " +
-                                secondHalfCorrect + "\tOrders: " + orders.Count + "\tPercentage: " +
-                                (firstHalfCorrect + secondHalfCorrect) / (double)orders.Count);
+                    w.WriteLine("K: " + kNearest + " \tCorrect: " + (firstHalfCorrect + secondHalfCorrect) + "\tOrders: " + orders.Count + "\tPercentage: " +
+                                Math.Round((firstHalfCorrect + secondHalfCorrect) / (double)orders.Count),3);
 
                     w.Flush();
 
@@ -78,70 +77,70 @@ namespace WebShopTest
             Assert.IsTrue(true);
         }
 
-        [TestMethod]
-        public void ItemBasedFullDataEvaluateKValue()
-        {
-            var products = db.Products.ToList();
-            var orders = db.Orders.ToList();
-            var orderDetails = db.OrderDetails.ToList();
-            var recommendationResults = db.RecommendationResults.ToList();
+        //[TestMethod]
+        //public void ItemBasedFullDataEvaluateKValue()
+        //{
+        //    var products = db.Products.ToList();
+        //    var orders = db.Orders.ToList();
+        //    var orderDetails = db.OrderDetails.ToList();
+        //    var recommendationResults = db.RecommendationResults.ToList();
 
-            ISimilarityCalculable similarityCalculable = new CosineSimilarity();
-            using (StreamWriter w = File.AppendText(@"c:\TestResult.txt"))
-            {
-                w.WriteLine("Item-based test" + DateTime.Now);
+        //    ISimilarityCalculable similarityCalculable = new CosineSimilarity();
+        //    using (StreamWriter w = File.AppendText(@"c:\TestResult.txt"))
+        //    {
+        //        w.WriteLine("Item-based test" + DateTime.Now);
 
-                for (int kNearest = 1; kNearest < products.Count; kNearest++)
-                {
-                    int firstHalfCorrect = 0;
-                    int secondHalfCorrect = 0;
+        //        for (int kNearest = 1; kNearest < products.Count; kNearest++)
+        //        {
+        //            int firstHalfCorrect = 0;
+        //            int secondHalfCorrect = 0;
 
 
-                    for (int j = 0; j < orders.Count; j++)
-                    {
-                        Order order = orders[j];
+        //            for (int j = 0; j < orders.Count; j++)
+        //            {
+        //                Order order = orders[j];
 
-                        List<Order> availableOrders = orders.ToList();
+        //                List<Order> availableOrders = orders.ToList();
 
-                        List<OrderDetail> availableOrderDetails =
-                            (from o in availableOrders
-                             from od in orderDetails
-                             where od.OrderId == o.OrderId
-                             select od).ToList();
+        //                List<OrderDetail> availableOrderDetails =
+        //                    (from o in availableOrders
+        //                     from od in orderDetails
+        //                     where od.OrderId == o.OrderId
+        //                     select od).ToList();
 
-                        List<RecommendationResult> availableRecommendationResults =
-                            (from o in availableOrders
-                             from rr in recommendationResults
-                             where rr.OrderId == o.OrderId
-                             select rr).ToList();
+        //                List<RecommendationResult> availableRecommendationResults =
+        //                    (from o in availableOrders
+        //                     from rr in recommendationResults
+        //                     where rr.OrderId == o.OrderId
+        //                     select rr).ToList();
 
-                        availableOrders.Remove(order);
-                        availableRecommendationResults.Remove(
-                            availableRecommendationResults.Find(rr => rr.OrderId == order.OrderId));
+        //                availableOrders.Remove(order);
+        //                availableRecommendationResults.Remove(
+        //                    availableRecommendationResults.Find(rr => rr.OrderId == order.OrderId));
 
-                        RecommendationCalculator calc = new RecommendationCalculator(@"c:\testLog.txt", products,
-                            availableOrders, availableOrderDetails, availableRecommendationResults);
+        //                RecommendationCalculator calc = new RecommendationCalculator(@"c:\testLog.txt", products,
+        //                    availableOrders, availableOrderDetails, availableRecommendationResults);
 
-                        Product product = calc.RecommendProductItemBased(order, similarityCalculable, kNearest);
+        //                Product product = calc.RecommendProductItemBased(order, similarityCalculable, kNearest);
 
-                        if (product.ProductId == recommendationResults[j].SelectedProductId)
-                        {
-                            if (j < orders.Count / 2)
-                                firstHalfCorrect++;
-                            else
-                                secondHalfCorrect++;
-                        }
-                    }
-                    w.WriteLine("K: " + kNearest + " \tFirstHalf: " + firstHalfCorrect + " \tSecondHalf: " +
-                                secondHalfCorrect + "\tOrders: " + orders.Count + "\tPercentage: " +
-                                (firstHalfCorrect + secondHalfCorrect) / (double)orders.Count);
+        //                if (product.ProductId == recommendationResults[j].SelectedProductId)
+        //                {
+        //                    if (j < orders.Count / 2)
+        //                        firstHalfCorrect++;
+        //                    else
+        //                        secondHalfCorrect++;
+        //                }
+        //            }
+        //            w.WriteLine("K: " + kNearest + " \tFirstHalf: " + firstHalfCorrect + " \tSecondHalf: " +
+        //                        secondHalfCorrect + "\tOrders: " + orders.Count + "\tPercentage: " +
+        //                        (firstHalfCorrect + secondHalfCorrect) / (double)orders.Count);
 
-                    w.Flush();
+        //            w.Flush();
 
-                }
-            }
-            Assert.IsTrue(true);
-        }
+        //        }
+        //    }
+        //    Assert.IsTrue(true);
+        //}
 
         [TestMethod]
         public void UserBasedLimitedDataEvaluateKValue()
@@ -195,7 +194,7 @@ namespace WebShopTest
                                 secondHalfCorrect++;
                         }
                     }
-                    w.WriteLine("K: " + kNearest + " \tFirstHalf: " + firstHalfCorrect + " \tSecondHalf: " + secondHalfCorrect + "\tOrders: " + orders.Count + "\tPercentage: " + (firstHalfCorrect + secondHalfCorrect) / (double)orders.Count);
+                    w.WriteLine("K: " + kNearest + " \tCorrect: " + (firstHalfCorrect + secondHalfCorrect) + "\tOrders: " + orders.Count + "\tPercentage: " + Math.Round((firstHalfCorrect + secondHalfCorrect) / (double)orders.Count),3);
 
                     w.Flush();
                 }
@@ -203,64 +202,64 @@ namespace WebShopTest
             Assert.IsTrue(true);
         }
 
-        [TestMethod]
-        public void UserBasedFullEvaluateKValue()
-        {
-            var products = db.Products.ToList();
-            var orders = db.Orders.ToList();
-            var orderDetails = db.OrderDetails.ToList();
-            var recommendationResults = db.RecommendationResults.ToList();
+        //[TestMethod]
+        //public void UserBasedFullEvaluateKValue()
+        //{
+        //    var products = db.Products.ToList();
+        //    var orders = db.Orders.ToList();
+        //    var orderDetails = db.OrderDetails.ToList();
+        //    var recommendationResults = db.RecommendationResults.ToList();
 
-            ISimilarityCalculable similarityCalculable = new CosineSimilarity();
+        //    ISimilarityCalculable similarityCalculable = new CosineSimilarity();
 
-            using (StreamWriter w = File.AppendText(@"c:\TestResult.txt"))
-            {
-                w.WriteLine("User-based test " + DateTime.Now);
+        //    using (StreamWriter w = File.AppendText(@"c:\TestResult.txt"))
+        //    {
+        //        w.WriteLine("User-based test " + DateTime.Now);
 
-                for (int kNearest = 1; kNearest < orders.Count; kNearest++)
-                {
-                    int firstHalfCorrect = 0;
-                    int secondHalfCorrect = 0;
+        //        for (int kNearest = 1; kNearest < orders.Count; kNearest++)
+        //        {
+        //            int firstHalfCorrect = 0;
+        //            int secondHalfCorrect = 0;
 
-                    for (int j = 0; j < orders.Count; j++)
-                    {
-                        Order order = orders[j];
+        //            for (int j = 0; j < orders.Count; j++)
+        //            {
+        //                Order order = orders[j];
 
-                        List<Order> availableOrders = orders.ToList();
+        //                List<Order> availableOrders = orders.ToList();
 
-                        List<OrderDetail> availableOrderDetails =
-                            (from o in availableOrders
-                             from od in orderDetails
-                             where od.OrderId == o.OrderId
-                             select od).ToList();
+        //                List<OrderDetail> availableOrderDetails =
+        //                    (from o in availableOrders
+        //                     from od in orderDetails
+        //                     where od.OrderId == o.OrderId
+        //                     select od).ToList();
 
-                        List<RecommendationResult> availableRecommendationResults =
-                            (from o in availableOrders
-                             from rr in recommendationResults
-                             where rr.OrderId == o.OrderId
-                             select rr).ToList();
+        //                List<RecommendationResult> availableRecommendationResults =
+        //                    (from o in availableOrders
+        //                     from rr in recommendationResults
+        //                     where rr.OrderId == o.OrderId
+        //                     select rr).ToList();
 
-                        availableOrders.Remove(order);
-                        availableRecommendationResults.Remove(availableRecommendationResults.Find(rr => rr.OrderId == order.OrderId));
+        //                availableOrders.Remove(order);
+        //                availableRecommendationResults.Remove(availableRecommendationResults.Find(rr => rr.OrderId == order.OrderId));
 
-                        RecommendationCalculator calc = new RecommendationCalculator(@"c:\testLog.txt", products, availableOrders, availableOrderDetails, availableRecommendationResults);
+        //                RecommendationCalculator calc = new RecommendationCalculator(@"c:\testLog.txt", products, availableOrders, availableOrderDetails, availableRecommendationResults);
 
-                        Product product = calc.RecommendProductUserBased(order, similarityCalculable, kNearest);
+        //                Product product = calc.RecommendProductUserBased(order, similarityCalculable, kNearest);
 
-                        if (product.ProductId == recommendationResults[j].SelectedProductId)
-                        {
-                            if (j < orders.Count / 2)
-                                firstHalfCorrect++;
-                            else
-                                secondHalfCorrect++;
-                        }
-                    }
-                    w.WriteLine("K: " + kNearest + " \tFirstHalf: " + firstHalfCorrect + " \tSecondHalf: " + secondHalfCorrect + "\tOrders: " + orders.Count + "\tPercentage: " + (firstHalfCorrect + secondHalfCorrect) / (double)orders.Count);
+        //                if (product.ProductId == recommendationResults[j].SelectedProductId)
+        //                {
+        //                    if (j < orders.Count / 2)
+        //                        firstHalfCorrect++;
+        //                    else
+        //                        secondHalfCorrect++;
+        //                }
+        //            }
+        //            w.WriteLine("K: " + kNearest + " \tFirstHalf: " + firstHalfCorrect + " \tSecondHalf: " + secondHalfCorrect + "\tOrders: " + orders.Count + "\tPercentage: " + (firstHalfCorrect + secondHalfCorrect) / (double)orders.Count);
 
-                    w.Flush();
-                }
-            }
-            Assert.IsTrue(true);
-        }
+        //            w.Flush();
+        //        }
+        //    }
+        //    Assert.IsTrue(true);
+        //}
     }
 }
